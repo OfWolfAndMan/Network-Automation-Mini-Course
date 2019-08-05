@@ -1,0 +1,9 @@
+flask
+flask_login
+requests
+slackclient
+flask_wtf
+wtforms
+pyyaml
+Flask-sqlalchemy
+websocket-client==0.47.0

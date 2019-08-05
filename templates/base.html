@@ -1,0 +1,44 @@
+    <!doctype html>
+    <html lang="en">
+      <head>
+          <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Realtime Table</title>
+          <script src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/uikit.almost-flat.min.css") }}">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/components/sticky.almost-flat.min.css") }}">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/components/notify.almost-flat.min.css") }}">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/components/tooltip.min.css") }}">
+        <script src="{{ url_for("static", filename="js/uikit.min.js") }}"></script>
+        <script src="{{ url_for("static", filename="js/components/sticky.min.js") }}"></script>
+        <script src="{{ url_for("static", filename="js/components/notify.min.js") }}"></script>
+        <script src="{{ url_for("static", filename="js/components/tooltip.min.js") }}"></script>
+        <style type="text/css">
+        </style>
+
+      </head>
+      <body>
+      <div class="uk-container uk-container-center">
+		<!-- Navigation Bar -->
+        <nav class="uk-navbar" data-uk-sticky="{top:10}">
+            <a class="uk-navbar-brand uk-hidden-small" href="{{ url_for("entries") }}"> NetworkConfigGen</a>
+            <a href="#sidebar" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+            <div class="uk-navbar-brand uk-navbar-center uk-visible-small">NCG</div>
+            <div class="uk-navbar-flip">
+                <ul class="uk-navbar-nav uk-hidden-small">
+                      <li><a href="{{ url_for("form") }}" class="navbar-item">Form</a></li>
+                      <li><a href="{{ url_for("entries") }}" class="navbar-item">Entries</a></li>
+                </ul>
+            </div>
+        </nav>
+          <div class="uk-width-medium-3-4" id="main_content" style="margin-top:70px">
+                        {% block content %}  {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+      </body>
+    </html>

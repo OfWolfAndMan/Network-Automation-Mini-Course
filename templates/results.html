@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% from "_render_field.html" import render_field %}
+
+{% block content %}
+<div class="flight-container" style="overflow: auto; max-height: 80vh, max-width:200vh">
+    <div class="table-responsive" style="max-width:2000px; text-align=center; vertical-align:center;">
+        <table class="table table-striped text-center" id="devices">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Vendor</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Management IP</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Region</th>
+                    <th scope="col">Site</th>
+                    <th scope="col">Device Name</th>
+                    <th scope="col">TACACS Server</th>
+                </tr>
+            </thead>
+            {% for entry in entries %}
+            <tbody>
+                <td>{{ entry['Vendor'] }}</td>
+                <td>{{ entry['Model'] }}</td>
+                <td>{{ entry['Management IP'] }}</td>
+                <td>{{ entry['Role'] }}</td>
+                <td>{{ entry['Region'] }}</td>
+                <td>{{ entry['Site'] }}</td>
+                <td>{{ entry['deviceName'] }}</td>
+                <td>{{ entry['TACACS Server'] }}</td>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
