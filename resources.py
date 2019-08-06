@@ -52,7 +52,7 @@ def send_slack(hostname, type, address):
         text=f"{hostname} {type} instance has been changed -  {address}")
 
 def load_api_data():
-    r = connect_to_api('http://0.0.0.0:32769/api/dcim/devices/', headers={'Authorization': 'Token 0123456789abcdef0123456789abcdef01234567'})
+    r = connect_to_api('http://172.19.0.3:8080/api/dcim/devices/', headers={'Authorization': 'Token 0123456789abcdef0123456789abcdef01234567'})
 
     my_devices = []
     for result in r["results"]:

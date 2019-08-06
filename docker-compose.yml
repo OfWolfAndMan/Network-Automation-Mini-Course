@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  flask:
+    build: .
+    ports: ['5000:5000']
+    environment:
+      - DEBUG
+      - SLACK_API_TOKEN=$SLACK_API_TOKEN
+    networks:s
+      - netbox-docker_default
+
+networks:
+  netbox-docker_default:
+    external: True

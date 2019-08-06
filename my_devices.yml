@@ -27,6 +27,6 @@
   Region: Americas
   Role: Small Branch Router
   Site: Branch Site A
-  TACACS Server: 'null'
+  TACACS Server: 12.45.22.13
   Vendor: Cisco
   deviceName: Router-A2
