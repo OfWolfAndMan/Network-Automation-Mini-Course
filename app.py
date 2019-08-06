@@ -1,23 +1,21 @@
-from flask import Flask, render_template, redirect
-from flask_login import login_required, LoginManager
+from flask import Flask, render_template, redirect, url_for, flash, session
+from functools import wraps
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SelectField
 from wtforms.validators import InputRequired
 import os
 from users import users
-from resources import yaml_function, thread_update, load_api_data
+import gc
+from resources import yaml_function, thread_update
 
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'ThisisMySecret!'
 
-login = LoginManager(app)
-
 class LoginForm(FlaskForm):
     myTemplates = [(x.split('.j2')[0], x.split('.j2')[0])  for x in os.listdir('./configTemplates')]
-    username = StringField('username', validators=[InputRequired('You need a username')])
-    password = PasswordField('password', validators=[InputRequired('Fill in the password!')])
+    hostname = StringField('hostname', validators=[InputRequired('You need a hostname')])
     myConfig = TextAreaField('myConfig')
     templates = SelectField('templates', choices=myTemplates)
 
@@ -25,32 +23,59 @@ class MainLoginForm(FlaskForm):
     username = StringField('username', validators=[InputRequired('You need a username')])
     password = PasswordField('password', validators=[InputRequired('Fill in the password!')])
 
-users = {'anthony': 'a123', 'hana': 'h123'}
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash("You need to login first")
+            return redirect(url_for('login'))
 
-@app.route('/login', methods=['GET', 'POST'])
+    return wrap
+
+@app.route("/")
+def base_uri():
+    return redirect(url_for('login'))
+
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
-    #Instantiate the form
     form = MainLoginForm()
+    usernames = [user for user in users.keys()]
     if form.validate_on_submit():
-        if form.username.data in users.keys():
-            user.authenticated = True
-            return redirect(url_for("form"))
+        if form.username.data not in usernames or users[form.username.data] != form.password.data:
+            flash("Username/password incorrect!")
+            return redirect(url_for('login'))
+        else:
+            session['logged_in'] = True
+            session['username'] = form.username.data
+            flash("Successfully logged in!")
+            return redirect(url_for('entries'))
     return render_template('login.html', form=form)
 
 #POST required to submit the user/password
 
-@app.route("/entries")
+@app.route("/logout/")
+@login_required
+def logout():
+    session.clear()
+    flash("You have been logged out!")
+    gc.collect()
+    return redirect(url_for('login'))
+
+@app.route("/entries/")
+@login_required
 def entries():
     loaded_data = yaml_function('my_devices.yml', 'load')
-    return render_template("results.html", entries=loaded_data)
+    return render_template("entries.html", entries=loaded_data)
 
-@app.route('/form', methods=['GET', 'POST'])
-def form():
+@app.route('/templates/', methods=['GET', 'POST'])
+@login_required
+def templates():
     #Instantiate the form
     form = LoginForm()
-    print(type(form))
     if form.validate_on_submit():
-        return render_template('results.html', username=form.username.data, password=form.password.data, myConfig=form.myConfig.data, templates=form.templates.data)
+        return render_template('entries.html', hostname=form.hostname.data, myConfig=form.myConfig.data, templates=form.templates.data)
     #Add the form to the page
     return render_template('form.html', form=form)
 

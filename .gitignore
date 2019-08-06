@@ -6,3 +6,4 @@ build/
 *.pyc
 .DS_Store
 .vscode
+DigiCertGlobalRootCA.crt

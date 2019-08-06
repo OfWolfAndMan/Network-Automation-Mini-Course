@@ -2,11 +2,25 @@
 {% from "_render_field.html" import render_field %}
 
 {% block content %}
+<div class="container" style="min-height:100% width:80%">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        {{message}}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% block body %}{% endblock %}
+</div>
 <div class="container theme-showcase" role="main">
     <div class="row">
         <div class="col-lg-12">
             <div class="well bs-component">
-                <form class="form-horizontal", method="POST", action="/form">
+                <form class="form-horizontal", method="POST">
                     {{ form.csrf_token }}
                 <fieldset>
                     <legend>Login</legend>
