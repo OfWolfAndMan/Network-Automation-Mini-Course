@@ -7,7 +7,7 @@ services:
     environment:
       - DEBUG
       - SLACK_API_TOKEN=$SLACK_API_TOKEN
-    networks:s
+    networks:
       - netbox-docker_default
 
 networks:
