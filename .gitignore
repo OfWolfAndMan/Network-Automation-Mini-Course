@@ -7,3 +7,4 @@ build/
 .DS_Store
 .vscode
 DigiCertGlobalRootCA.crt
+/configTemplates/ASA/S2S*
