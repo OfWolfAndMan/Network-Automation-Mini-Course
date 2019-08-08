@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'ThisisMySecret!'
 
-class LoginForm(FlaskForm):
+class TemplateForm(FlaskForm):
     myTemplates = [(x.split('.j2')[0], x.split('.j2')[0])  for x in os.listdir('./configTemplates')]
     hostname = StringField('hostname', validators=[InputRequired('You need a hostname')])
     myConfig = TextAreaField('myConfig')
@@ -67,13 +67,13 @@ def logout():
 @login_required
 def entries():
     loaded_data = yaml_function('my_devices.yml', 'load')
-    return render_template("entries.html", entries=loaded_data)
+    return render_template('entries.html', entries=loaded_data)
 
 @app.route('/templates/', methods=['GET', 'POST'])
 @login_required
 def templates():
     #Instantiate the form
-    form = LoginForm()
+    form = TemplateForm()
     if form.validate_on_submit():
         return render_template('entries.html', hostname=form.hostname.data, myConfig=form.myConfig.data, templates=form.templates.data)
     #Add the form to the page
@@ -82,3 +82,14 @@ def templates():
 if __name__ == "__main__":
     thread_update()
     app.run(debug=True, host='0.0.0.0')
+
+"""Blueprint placeholder for when a
+   Blueprint is needed"""
+
+#def main():
+    #register_blueprints()
+    #app.run(debug=True)
+
+#def register_blueprints():
+    #from views import common
+    #app.register_blueprint(common.blueprint)
