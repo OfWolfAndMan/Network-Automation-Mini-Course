@@ -66,7 +66,10 @@ def logout():
 @app.route("/entries/")
 @login_required
 def entries():
-    loaded_data = yaml_function('my_devices.yml', 'load')
+    try:
+        loaded_data = yaml_function('my_devices.yml', 'load')
+    except FileNotFoundError:
+        return flask.abort(404)
     return render_template('entries.html', entries=loaded_data)
 
 @app.route('/templates/', methods=['GET', 'POST'])
