@@ -7,6 +7,8 @@ services:
     environment:
       - DEBUG
       - SLACK_API_TOKEN=$SLACK_API_TOKEN
+      - NETBOX_HOSTNAME=$NETBOX_HOSTNAME
+      - NETBOX_PORT=$NETBOX_PORT
     networks:
       - netbox-docker_default
 
