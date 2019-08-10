@@ -4,14 +4,11 @@
           <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Realtime Table</title>
+        <title>NetConfGen</title>
           <script src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
         <link rel="stylesheet" href="{{ url_for("static", filename="css/uikit.almost-flat.min.css") }}">
-        <link rel="stylesheet" href="{{ url_for("static", filename="css/components/sticky.almost-flat.min.css") }}">
-        <link rel="stylesheet" href="{{ url_for("static", filename="css/components/notify.almost-flat.min.css") }}">
-        <link rel="stylesheet" href="{{ url_for("static", filename="css/components/tooltip.min.css") }}">
         <script src="{{ url_for("static", filename="js/uikit.min.js") }}"></script>
         <script src="{{ url_for("static", filename="js/components/sticky.min.js") }}"></script>
         <script src="{{ url_for("static", filename="js/components/notify.min.js") }}"></script>
@@ -35,10 +32,27 @@
                 </ul>
             </div>
         </nav>
-          <div class="uk-width-medium-3-4" id="main_content" style="margin-top:70px">
-                        {% block content %}  {% endblock %}
+              <div class="uk-grid" data-uk-grid-margin>
+                  <div class="uk-width-medium-1-4 uk-hidden-small" style="margin-top:50px">
+                    <!-- Menu -->
+                    <div class="uk-panel uk-panel-box" data-uk-sticky="{top:60}">
+                        <ul class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-scrollspy-nav="{closest:'li', smoothscroll:true}" data-uk-nav>
+                            <li><a href="{{ url_for("entries") }}"><span class="uk-icon-home"></span> Homepage</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a href="{{ url_for("templates") }}"><span class="uk-icon-file-text-o"></span> Templates</a></li>
+                            <li><a href="{{ url_for("entries") }}"><span class="uk-icon-database"></span> Network Data</a></li>
+                            <li class="uk-nav-divider"></li>
+                             <li><a href="{{ url_for("logout") }}"><span class="uk-icon-sign-out"></span> Logout</a></li>
+{#                            <li class="uk-nav-header">Projects</li>#}
+                        </ul>
                     </div>
-                </div>
+                  </div>
+
+                  <div class="uk-width-medium-3-4" id="main_content" style="margin-top:50px">
+                  <!-- Body -->
+                      {% block content %}  {% endblock %}
+                  </div>
+             </div>
             </div>
         </div>
       </body>
