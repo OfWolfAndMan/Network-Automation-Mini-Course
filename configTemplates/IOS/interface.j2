@@ -1,0 +1,18 @@
+{% for n in range(23) %}
+
+interface {{ interface.intname }}{{ n + 1}}
+ description {{ interface.description }}
+{%- if n+1 > 22 %}
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 1 mode active
+{%- else %}
+ switchport mode access
+ switchport access vlan {{ interface.vlan }}
+{%- endif %}
+{%- if n+1 > 10 and n+1 < 22 %}
+ switchport voice vlan {{ interface.voice_vlan }}
+
+{%- endif %}
+{%- endfor %}
