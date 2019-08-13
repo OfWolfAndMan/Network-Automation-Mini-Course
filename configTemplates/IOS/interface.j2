@@ -1,13 +1,14 @@
-{% for n in range(23) %}
+{% for n in range(24) %}
 
 interface {{ interface.intname }}{{ n + 1}}
- description {{ interface.description }}
 {%- if n+1 > 22 %}
+ description {{ interface.trunk_description }}
  switchport trunk encapsulation dot1q
  switchport mode trunk
  switchport nonegotiate
  channel-group 1 mode active
 {%- else %}
+ description {{ interface.host_description }}
  switchport mode access
  switchport access vlan {{ interface.vlan }}
 {%- endif %}

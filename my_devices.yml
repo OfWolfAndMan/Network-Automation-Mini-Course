@@ -1,5 +1,6 @@
 - Management IP: 4.5.6.7/32
   Model: '3925'
+  NOS: 'IOS'
   Region: Asia
   Role: Small Branch Router
   Site: Branch Site B
@@ -8,6 +9,7 @@
   deviceName: Router-B1
 - Management IP: 7.1.36.2/32
   Model: '3925'
+  NOS: 'IOS'
   Region: Asia
   Role: Small Branch Router
   Site: Branch Site B
@@ -16,6 +18,7 @@
   deviceName: Router-B2
 - Management IP: 1.2.3.4/32
   Model: '4431'
+  NOS: 'IOS'
   Region: Americas
   Role: Small Branch Router
   Site: Branch Site A
@@ -24,6 +27,7 @@
   deviceName: Router-A1
 - Management IP: 5.2.10.5/32
   Model: '4431'
+  NOS: 'IOS'
   Region: Americas
   Role: Small Branch Router
   Site: Branch Site A
