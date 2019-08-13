@@ -7,7 +7,6 @@ def render_template(Hostname, Template, Model, NOS="IOS"):
     ENV = Environment(loader=FileSystemLoader(f'./configTemplates/{NOS}'))
     try:
         template = ENV.get_template(f"{Template}.j2")
-        print("Template was found!")
     except FileNotFoundError:
         print("The file was not found!")
 
