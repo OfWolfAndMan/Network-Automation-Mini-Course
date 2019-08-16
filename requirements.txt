@@ -8,3 +8,4 @@ pyyaml
 Flask-sqlalchemy
 websocket-client==0.47.0
 netmiko
+flake8
