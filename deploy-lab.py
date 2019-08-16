@@ -12,6 +12,7 @@ cookies = test_login()
 test_create_lab(cookies, ProjectBase)
 base_left = 20
 base_top = 50
+print("Phase: Deploying Nodes")
 for i in range(0, number_of_nodes):
 	hostname = f"R{i+1}"
 	router = (Router(hostname, left=base_left, top=base_top).to_json())
@@ -25,4 +26,6 @@ test_start_nodes(cookies, ProjectName)
 time.sleep(2)
 address_info = test_get_nodes(cookies, ProjectName)
 test_logout(cookies)
-print(address_info.get("data"))
+mgmt_info = [(value['name'], value['url']) for key, value in address_info.get("data").items()]
+for x, device in enumerate(mgmt_info, 1):
+	print(x, device)
