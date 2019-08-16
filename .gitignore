@@ -58,7 +58,8 @@ __pycache__/
 # Other
 .DS_Store
 .vscode
-EVE-NG/test_provisioning.py
+EVE_NG/test_provisioning.py
+EVE_NG/device*.py
 
 # Project-Specific
 DigiCertGlobalRootCA.crt
