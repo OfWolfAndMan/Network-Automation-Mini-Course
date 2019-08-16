@@ -7,7 +7,7 @@ import sys
 
 ####################################################################
 # Environment variables required to be set prior to running this
-# EVE_HOST      The hostname of the EVE-NG instance
+# EVE_HOST      The hostname of the EVE_NG instance
 ####################################################################
 
 headers = {
@@ -33,15 +33,15 @@ def test_login():
     return cookies
 
 
-def test_create_lab(cookies, headers):
+def test_create_lab(cookies, headers, LabName):
     data = """{
     "path": "/",
-    "name":"Mock Lab 2",
+    "name":"{0}}",
     "version":"1",
     "author":"Bob",
     "description":"A demo lab",
     "body":"Lab usage and guide"
-    }"""
+    }""".format(LabName)
 
     r = requests.post(
         "http://{EVE_HOST}/api/labs", cookies=cookies, data=data, headers=headers
@@ -88,21 +88,19 @@ def test_get_nodes(cookies, headers):
     print("Phase: Get nodes: {}".format(r.json()))
 
 
-def test_add_config(cookies, headers):
+def test_add_config(cookies, headers, node_id):
 
-    url = f"http://{EVE_HOST}/api/labs/{ProjectName}/configs/1"
+    url = f"http://{EVE_HOST}/api/labs/{ProjectName}/configs/{node_id}"
 
     payload = '{\n\t"data": "aaa new-model\\ninterface eth0/0\\n ip address dhcp\\n no shut\\n line vty 0 4\\n transport input ssh"\n}'
 
     r = requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
-    print(("Phase: Adding config: {}".format(r.text, r.status_code)))
 
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}/nodes/1"
 
     payload = '{\n\t"config": 1\n}'
 
     rtwo = requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
-    print("Phase: Set config flag: {}".format(rtwo.json()))
 
 
 def test_start_nodes(cookies, headers):
