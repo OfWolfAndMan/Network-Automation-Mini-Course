@@ -14,6 +14,9 @@ headers = {
         'cache-control': "no-cache"
 }
 
+ProjectName = "{}.unl".format("%20".join(my_string.split()))
+EVE_HOST = os.getenv(EVE_HOST, "192.168.100.193")
+
 def test_login():
 
     data = '{"username":"admin","password":"eve","html5":-1}'
@@ -45,13 +48,13 @@ def test_create_lab(cookies, headers):
         print("An error occurred creating the lab")
 
 def test_get_lab(cookies):
-    rthird = requests.get(f'http://{EVE_HOST}/api/labs/Mock%20Lab%202.unl', cookies=cookies)
+    rthird = requests.get(f'http://{EVE_HOST}/api/labs/{ProjectName}', cookies=cookies)
     print("Getting lab...")
     # print(rthird.json())
     # return rthird
 
 def test_delete_lab(cookies):
-    rthird = requests.delete(f'http://{EVE_HOST}/api/labs/Mock%20Lab%202.unl', cookies=cookies)
+    rthird = requests.delete(f'http://{EVE_HOST}/api/labs/{ProjectName}', cookies=cookies)
     if rthird.status_code == 404:
         print("Lab already deleted")
     else:
@@ -63,20 +66,20 @@ def test_logout(cookies, headers):
 
 
 def test_get_nodes(cookies, headers):
-    r = requests.get(f'http://{EVE_HOST}/api/labs/Mock%20Lab%202.unl/nodes', headers=headers,
+    r = requests.get(f'http://{EVE_HOST}/api/labs/{ProjectName}/nodes', headers=headers,
                              cookies=cookies)
     print("Phase: Get nodes: {}".format(r.json()))
 
 def test_add_config(cookies, headers):
 
-    url = f"http://{EVE_HOST}/api/labs/Mock%20Lab%202.unl/configs/1"
+    url = f"http://{EVE_HOST}/api/labs/{ProjectName}/configs/1"
 
     payload = "{\n\t\"data\": \"aaa new-model\\ninterface eth0/0\\n ip address dhcp\\n no shut\\n line vty 0 4\\n transport input ssh\"\n}"
 
     r = requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
     print(("Phase: Adding config: {}".format(r.text, r.status_code)))
 
-    url = f"http://{EVE_HOST}/api/labs/Mock%20Lab%202.unl/nodes/1"
+    url = f"http://{EVE_HOST}/api/labs/{ProjectName}/nodes/1"
 
     payload = "{\n\t\"config\": 1\n}"
 
@@ -85,7 +88,7 @@ def test_add_config(cookies, headers):
 
 
 def test_start_nodes(cookies, headers):
-    url = f"http://{EVE_HOST}/api/labs/Mock%20Lab.unl/nodes/start"
+    url = f"http://{EVE_HOST}/api/labs/{ProjectName}/nodes/start"
 
     r = requests.request("GET", url, headers=headers, cookies=cookies)
 
