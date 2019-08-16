@@ -1,0 +1,19 @@
+[tool.black]
+line-length = 88
+exclude = '''
+/(
+    \.git
+  | \.dockerignore
+  | \.flake8
+  | \.gitignore
+  | \.idea
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | views
+  | build
+  | dist
+  | venv
+)/
+'''

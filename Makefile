@@ -1,9 +1,9 @@
 
-.PHONY: lintn all-test all-notest init test
+.PHONY: lintn all-test all-notest init test format
 
-all-test: init test lint
+all-test: test
 
-all-notest: init lint
+all-notest: init format lint
 
 init:
 	pip install -r requirements.txt
@@ -11,7 +11,12 @@ init:
 test:
 	py.test tests
 
+format:
+	$(info ************  Formatting code to standard ************)
+	black . > ./Logs/format-log.txt
 
 lint:
 	$(info ************  Linting Python files ************)
-	flake8 . > ./Logs/lint-log.txt
+	flake8 . > ./Logs/flake8lint-log.txt
+	$(info ************  Linting YAML files ************)
+	yamllint . > ./Logs/yamllint

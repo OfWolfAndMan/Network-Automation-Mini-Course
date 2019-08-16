@@ -1,6 +1,8 @@
 import requests
 from netmiko import ConnectHandler
 import os
+import sys
+
 # import pytest
 
 ####################################################################
@@ -9,19 +11,20 @@ import os
 ####################################################################
 
 headers = {
-        'Content-Type': "application/json",
-        'Accept': "*/*",
-        'cache-control': "no-cache"
+    "Content-Type": "application/json",
+    "Accept": "*/*",
+    "cache-control": "no-cache",
 }
 
-ProjectName = "{}.unl".format("%20".join(my_string.split()))
-EVE_HOST = os.getenv(EVE_HOST, "192.168.100.193")
+ProjectName = "{}.unl".format("%20".join(sys.argv[0].split()))
+EVE_HOST = os.getenv("EVE_HOST", "192.168.100.193")
+
 
 def test_login():
 
     data = '{"username":"admin","password":"eve","html5":-1}'
 
-    r = requests.post(f'http://{EVE_HOST}/api/auth/login', data=data)
+    r = requests.post(f"http://{EVE_HOST}/api/auth/login", data=data)
     cookies = r.cookies.get_dict()
     if r.status_code == 200:
         print("Logged in...")
@@ -29,17 +32,20 @@ def test_login():
         print("An error occurred logging in", r.json())
     return cookies
 
+
 def test_create_lab(cookies, headers):
-    data = '''{
+    data = """{
     "path": "/",
     "name":"Mock Lab 2",
     "version":"1",
     "author":"Bob",
     "description":"A demo lab",
     "body":"Lab usage and guide"
-    }'''
+    }"""
 
-    r = requests.post('http://{EVE_HOST}/api/labs', cookies=cookies, data=data, headers=headers)
+    r = requests.post(
+        "http://{EVE_HOST}/api/labs", cookies=cookies, data=data, headers=headers
+    )
     if r.status_code == 200:
         print("Lab has been created")
     elif r.status_code == 412:
@@ -47,41 +53,53 @@ def test_create_lab(cookies, headers):
     else:
         print("An error occurred creating the lab")
 
+
 def test_get_lab(cookies):
-    rthird = requests.get(f'http://{EVE_HOST}/api/labs/{ProjectName}', cookies=cookies)
+    rthird = requests.get(f"http://{EVE_HOST}/api/labs/{ProjectName}", cookies=cookies)
     print("Getting lab...")
-    # print(rthird.json())
-    # return rthird
+    return rthird
+
 
 def test_delete_lab(cookies):
-    rthird = requests.delete(f'http://{EVE_HOST}/api/labs/{ProjectName}', cookies=cookies)
+    rthird = requests.delete(
+        f"http://{EVE_HOST}/api/labs/{ProjectName}", cookies=cookies
+    )
     if rthird.status_code == 404:
         print("Lab already deleted")
     else:
         print("Lab has been deleted")
 
+
 def test_logout(cookies, headers):
-    r = requests.delete(f'http://{EVE_HOST}/api/auth/logout', cookies=cookies, headers=headers)
+    r = requests.get(
+        f"http://{EVE_HOST}/api/auth/logout", cookies=cookies, headers=headers
+    )
+    if r.status_code != 200:
+        raise Exception("An error occured logging out!")
     print("Logging out")
 
 
 def test_get_nodes(cookies, headers):
-    r = requests.get(f'http://{EVE_HOST}/api/labs/{ProjectName}/nodes', headers=headers,
-                             cookies=cookies)
+    r = requests.get(
+        f"http://{EVE_HOST}/api/labs/{ProjectName}/nodes",
+        headers=headers,
+        cookies=cookies,
+    )
     print("Phase: Get nodes: {}".format(r.json()))
+
 
 def test_add_config(cookies, headers):
 
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}/configs/1"
 
-    payload = "{\n\t\"data\": \"aaa new-model\\ninterface eth0/0\\n ip address dhcp\\n no shut\\n line vty 0 4\\n transport input ssh\"\n}"
+    payload = '{\n\t"data": "aaa new-model\\ninterface eth0/0\\n ip address dhcp\\n no shut\\n line vty 0 4\\n transport input ssh"\n}'
 
     r = requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
     print(("Phase: Adding config: {}".format(r.text, r.status_code)))
 
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}/nodes/1"
 
-    payload = "{\n\t\"config\": 1\n}"
+    payload = '{\n\t"config": 1\n}'
 
     rtwo = requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
     print("Phase: Set config flag: {}".format(rtwo.json()))
@@ -93,6 +111,7 @@ def test_start_nodes(cookies, headers):
     r = requests.request("GET", url, headers=headers, cookies=cookies)
 
     print("Phase: Start nodes: {}".format(r.json()))
+
 
 cookies = test_login()
 test_create_lab(cookies, headers)
