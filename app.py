@@ -113,11 +113,6 @@ if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
 
 
-"""A super simple API endpoint"""
-# @app.route('/devices/<string:getsomethingcool>/')
-# def get_something_cool(getsomethingcool: str):
-#    return "Your string is {}".format(getsomethingcool)
-
 """Blueprint placeholder for when a
    Blueprint is needed"""
 

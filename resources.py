@@ -56,11 +56,13 @@ def send_slack(hostname, type, address):
 
 
 def load_api_data():
-    api_hostname = os.getenv("NETBOX_HOSTNAME", "127.0.0.1")
-    api_port = os.getenv("NETBOX_PORT", "8080")
+    """Can use Netbox API or Facade API"""
+    api_hostname = os.getenv("API_HOSTNAME", "127.0.0.1")
+    api_port = os.getenv("API_PORT", "8080")
+    api_auth = os.getenv("API_AUTH", None)
     r = connect_to_api(
         f"http://{api_hostname}:{api_port}/api/dcim/devices/",
-        headers={"Authorization": "Token 0123456789abcdef0123456789abcdef01234567"},
+        headers=api_auth,
     )
 
     my_devices = []
