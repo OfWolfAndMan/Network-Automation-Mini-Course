@@ -41,7 +41,9 @@ def test_create_lab(cookies, headers, LabName):
     "author":"Bob",
     "description":"A demo lab",
     "body":"Lab usage and guide"
-    }""".format(LabName)
+    }""".format(
+        LabName
+    )
 
     r = requests.post(
         "http://{EVE_HOST}/api/labs", cookies=cookies, data=data, headers=headers
@@ -94,13 +96,13 @@ def test_add_config(cookies, headers, node_id):
 
     payload = '{\n\t"data": "aaa new-model\\ninterface eth0/0\\n ip address dhcp\\n no shut\\n line vty 0 4\\n transport input ssh"\n}'
 
-    r = requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
+    requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
 
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}/nodes/1"
 
     payload = '{\n\t"config": 1\n}'
 
-    rtwo = requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
+    requests.request("PUT", url, data=payload, headers=headers, cookies=cookies)
 
 
 def test_start_nodes(cookies, headers):
