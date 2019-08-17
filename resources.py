@@ -105,6 +105,12 @@ def load_api_data():
 
     yaml_function("my_devices.yml", "dump", data=current_data)
 
+def path_exists(hostname, pathtype, model, NOS="IOS"):
+    #Pathtype options: 'config' (Falls under rendered template folder), 'template'
+    if pathtype == 'config':
+        if os.path.exists(f'./renderedTemplates/{NOS}/{model}/{hostname}.txt'):
+            return True
+
 
 def thread_update():
     def recurrent_update():
