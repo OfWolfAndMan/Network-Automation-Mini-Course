@@ -10,3 +10,5 @@ websocket-client==0.47.0
 netmiko
 flake8
 yamllint
+pytest
+pytest-cov

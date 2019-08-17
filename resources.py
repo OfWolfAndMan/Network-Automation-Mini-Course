@@ -61,8 +61,7 @@ def load_api_data():
     api_port = os.getenv("API_PORT", "8080")
     api_auth = os.getenv("API_AUTH", None)
     r = connect_to_api(
-        f"http://{api_hostname}:{api_port}/api/dcim/devices/",
-        headers=api_auth,
+        f"http://{api_hostname}:{api_port}/api/dcim/devices/", headers=api_auth
     )
 
     my_devices = []
