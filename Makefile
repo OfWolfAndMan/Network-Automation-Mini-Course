@@ -1,7 +1,7 @@
 
 .PHONY: lintn all-test all-notest init test format
 
-all-test: test
+all-test: init test format lint
 
 all-notest: init format lint
 
@@ -9,7 +9,7 @@ init:
 	pip install -r requirements.txt
 
 test:
-	py.test tests
+	pytest -v tests
 
 format:
 	$(info ************  Formatting code to standard ************)
