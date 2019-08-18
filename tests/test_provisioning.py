@@ -85,6 +85,24 @@ def test_create_node(test_login):
     )
     assert r.status_code == 201
 
+def test_get_nodes(test_login):
+    cookies = test_login
+    r = requests.request(
+        "GET",
+        f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes",
+        headers=headers,
+        cookies=cookies,
+    )
+    assert r.status_code == 200
+
+def test_stop_nodes(test_login):
+    cookies = test_login
+    url = f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/stop"
+
+    r = requests.request("GET", url, headers=headers, cookies=cookies)
+
+    assert r.status_code == 200
+
 def test_delete_node(test_login):
     cookies = test_login
     r = requests.request(
