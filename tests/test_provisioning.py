@@ -95,6 +95,35 @@ def test_get_nodes(test_login):
     )
     assert r.status_code == 200
 
+def test_create_net(test_login):
+    cookies = test_login
+    defaults = {
+    "count": 0,
+    "left": 588,
+    "name": "Net",
+    "top": 36,
+    "type": "pnet0",
+    "visibility": 1
+}
+    r = requests.request(
+        "POST",
+        f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/networks",
+        headers=headers,
+        cookies=cookies,
+        json=defaults
+    )
+    assert r.status_code == 201
+
+def test_delete_net(test_login):
+    cookies = test_login
+    r = requests.request(
+        "DELETE",
+        f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/networks/1",
+        headers=headers,
+        cookies=cookies
+    )
+    assert r.status_code == 200
+
 def test_stop_nodes(test_login):
     cookies = test_login
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/stop"
