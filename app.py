@@ -86,7 +86,7 @@ def logout():
 @login_required
 def entries():
     try:
-        loaded_data = yaml_function("my_devices.yml", "load")
+        loaded_data = yaml_function("Facade API/lab_devices.yml", "load")
     except FileNotFoundError:
         return abort(404)
     return render_template("entries.html", entries=loaded_data)

@@ -116,6 +116,16 @@ def test_create_net(test_login):
     )
     assert r.status_code == 201
 
+def test_get_net(test_login):
+    cookies = test_login
+    r = requests.request(
+        "GET",
+        f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/networks",
+        headers=headers,
+        cookies=cookies,
+    )
+    assert r.status_code == 200
+
 
 def test_delete_net(test_login):
     cookies = test_login
@@ -127,6 +137,13 @@ def test_delete_net(test_login):
     )
     assert r.status_code == 200
 
+def test_start_nodes(test_login):
+    cookies = test_login
+    url = f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/start"
+
+    r = requests.request("GET", url, headers=headers, cookies=cookies)
+
+    assert r.status_code == 200
 
 def test_stop_nodes(test_login):
     cookies = test_login
