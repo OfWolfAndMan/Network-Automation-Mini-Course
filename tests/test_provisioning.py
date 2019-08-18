@@ -76,14 +76,14 @@ def test_create_node(test_login):
         "cpu": 1,
         "ethernet": 4,
     }
-    requests.request(
+    r = requests.request(
         "POST",
         f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes",
         headers=headers,
         cookies=cookies,
         json=data,
     )
-
+    assert r.status_code == 201
 
 def test_delete_node(test_login):
     cookies = test_login

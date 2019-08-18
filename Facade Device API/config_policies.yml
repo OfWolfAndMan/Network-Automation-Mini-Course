@@ -1,0 +1,27 @@
+- name: Telnet disable
+  description: Disables telnet on a network device
+  platform: IOS
+  device_types:
+    - router
+    - switch
+  command: line vty 0 4\n no transport input telnet
+- name: SSH Version 2
+  description: SSH version 2 is enabled on a network device
+  platform: IOS
+  device_types:
+    - router
+    - switch
+  command: ip ssh version 2
+- name: Disable HTTP server
+  description: Disables the HTTP server on a network device
+  platform: IOS
+  device_types:
+    - router
+    - switch
+  command: no ip http-server
+- name: VTP Version 3
+  description: VTP version 3 must be enabled on all switches
+  platform: IOS
+  device_types:
+    - switch
+  command: vtp version 3
