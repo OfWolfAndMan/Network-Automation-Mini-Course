@@ -9,6 +9,7 @@ init:
 	pip install -r requirements.txt
 
 test:
+	$(info ************  Running tests ************)
 	pytest -v tests
 
 format:

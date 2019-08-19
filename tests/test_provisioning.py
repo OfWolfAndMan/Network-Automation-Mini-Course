@@ -126,16 +126,17 @@ def test_get_net(test_login):
     )
     assert r.status_code == 200
 
-
-def test_delete_net(test_login):
+def test_connect_intf(test_login):
     cookies = test_login
+    data = {"0": "1"}
     r = requests.request(
-        "DELETE",
-        f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/networks/1",
+        "PUT",
+        f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/1/interfaces",
         headers=headers,
         cookies=cookies,
+        json=data
     )
-    assert r.status_code == 200
+    assert r.status_code == 201
 
 def test_start_nodes(test_login):
     cookies = test_login
@@ -153,6 +154,15 @@ def test_stop_nodes(test_login):
 
     assert r.status_code == 200
 
+def test_delete_net(test_login):
+    cookies = test_login
+    r = requests.request(
+        "DELETE",
+        f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/networks/1",
+        headers=headers,
+        cookies=cookies,
+    )
+    assert r.status_code == 200
 
 def test_delete_node(test_login):
     cookies = test_login
