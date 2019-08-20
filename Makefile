@@ -11,6 +11,7 @@ init:
 test:
 	$(info ************  Running tests ************)
 	pytest -v tests
+	rm -r tests/__pycache__
 
 format:
 	$(info ************  Formatting code to standard ************)

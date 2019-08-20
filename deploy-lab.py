@@ -29,21 +29,21 @@ print("********** Deploying Cloud Connection... **********")
 create_net(cookies, ProjectName)
 print("********** Phase: Deploying Nodes... **********")
 for i in range(0, number_of_nodes):
-	node_id = i+1
-	hostname = f"R{node_id}"
-	filepath = path_exists(hostname, "config", "4431")
-	if not filepath:
-		print(f"{hostname} has no configuration file! Skipping...")
-		continue
-	router = Router(hostname, left=base_left, top=base_top).to_json()
-	create_node(cookies, router, ProjectName)
-	connect_intf(cookies, ProjectName, node_id)
-	time.sleep(0.1)
-	with open(f"./renderedTemplates/IOS/4431/{hostname}.txt", "r") as configfile:
-		config = {"data": configfile.read()}
-		test_add_config(cookies, config, ProjectName, node_id)
-	base_left += 40
-	base_top += 50
+    node_id = i + 1
+    hostname = f"R{node_id}"
+    filepath = path_exists(hostname, "config", "4431")
+    if not filepath:
+        print(f"{hostname} has no configuration file! Skipping...")
+        continue
+    router = Router(hostname, left=base_left, top=base_top).to_json()
+    create_node(cookies, router, ProjectName)
+    connect_intf(cookies, ProjectName, node_id)
+    time.sleep(0.1)
+    with open(f"./renderedTemplates/IOS/4431/{hostname}.txt", "r") as configfile:
+        config = {"data": configfile.read()}
+        test_add_config(cookies, config, ProjectName, node_id)
+    base_left += 40
+    base_top += 50
 
 start_nodes(cookies, ProjectName)
 address_info = get_nodes(cookies, ProjectName)
@@ -65,4 +65,8 @@ mgmt_info = [
 #     print(x, (device[1]).split(":")[-1])
 print("********** Done! **********")
 time_after = time.time()
-print("********** Total Time: {} seconds **********".format(round(time_after - time_before, 2)))
+print(
+    "********** Total Time: {} seconds **********".format(
+        round(time_after - time_before, 2)
+    )
+)
