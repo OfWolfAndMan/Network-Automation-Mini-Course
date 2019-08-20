@@ -90,7 +90,7 @@ def load_api_data():
                 "TACACS Server": tacacs,
             }
         )
-    current_data = yaml_function("Facade API/lab_devices.yml", "load")
+    current_data = yaml_function("APIs/lab_devices.yml", "load")
 
     for device in my_devices:
         for x, current_device in enumerate(current_data):
@@ -105,7 +105,7 @@ def load_api_data():
                     if key.lower() == "tacacs server":
                         send_slack(current_device["deviceName"], "tacacs", device[key])
 
-    yaml_function("Facade API/lab_devices.yml", "dump", data=current_data)
+    yaml_function("APIs/lab_devices.yml", "dump", data=current_data)
 
 
 def path_exists(hostname, pathtype, model, NOS="IOS"):

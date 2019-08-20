@@ -13,7 +13,7 @@ headers = {
     "Accept": "*/*",
     "cache-control": "no-cache",
 }
-EVE_HOST = os.getenv("EVE_HOST", "192.168.100.193")
+EVE_HOST = os.getenv("EVE_HOST", "192.168.170.129")
 api_hostname = f"{EVE_HOST}"
 EVE_PASS = os.getenv("EVE_PASS", "eve")
 ProjectName = "Lab Sample A"
@@ -116,6 +116,7 @@ def test_create_net(test_login):
     )
     assert r.status_code == 201
 
+
 def test_get_net(test_login):
     cookies = test_login
     r = requests.request(
@@ -126,6 +127,7 @@ def test_get_net(test_login):
     )
     assert r.status_code == 200
 
+
 def test_connect_intf(test_login):
     cookies = test_login
     data = {"0": "1"}
@@ -134,9 +136,10 @@ def test_connect_intf(test_login):
         f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/1/interfaces",
         headers=headers,
         cookies=cookies,
-        json=data
+        json=data,
     )
     assert r.status_code == 201
+
 
 def test_start_nodes(test_login):
     cookies = test_login
@@ -146,6 +149,7 @@ def test_start_nodes(test_login):
 
     assert r.status_code == 200
 
+
 def test_stop_nodes(test_login):
     cookies = test_login
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/stop"
@@ -153,6 +157,7 @@ def test_stop_nodes(test_login):
     r = requests.request("GET", url, headers=headers, cookies=cookies)
 
     assert r.status_code == 200
+
 
 def test_delete_net(test_login):
     cookies = test_login
@@ -163,6 +168,7 @@ def test_delete_net(test_login):
         cookies=cookies,
     )
     assert r.status_code == 200
+
 
 def test_delete_node(test_login):
     cookies = test_login

@@ -4,7 +4,7 @@ from EVE_NG.test_provisioning import (
     delete_node,
     get_nodes,
     stop_nodes,
-    delete_net
+    delete_net,
 )
 import sys
 
