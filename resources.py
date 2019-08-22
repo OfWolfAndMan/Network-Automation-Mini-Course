@@ -123,3 +123,4 @@ def thread_update():
 
     thread = threading.Thread(target=recurrent_update)
     thread.start()
+

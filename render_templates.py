@@ -25,7 +25,7 @@ def render_template(Hostname, Template, Model, NOS="IOS"):
             self.vlan = vlan
             self.voice_vlan = voice_vlan
 
-    intf_object = L2Interface("GigabitEthernet0/0/", vlan=15)
+    intf_object = L2Interface("GigabitEthernet0/", vlan=15)
 
     if not os.path.exists(DirectoryToAdd):
         os.mkdir(DirectoryToAdd)

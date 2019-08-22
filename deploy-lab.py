@@ -52,17 +52,20 @@ mgmt_info = [
     (value["name"], value["url"]) for key, value in address_info.get("data").items()
 ]
 
-# print("********** Finalizing Provisioning... **********")
-# time.sleep(3)
-# for x, device in enumerate(mgmt_info, 1):
-#     print(((device[1]).split(":")[1])[2:], (device[1]).split(":")[-1])
-#     device_connect(
-#         ((device[1]).split(":")[1])[2:],
-#         int((device[1]).split(":")[-1]),
-#         "no\n\n",
-#         auth=False,
-#     )
-#     print(x, (device[1]).split(":")[-1])
+print("********** Finalizing Provisioning... **********")
+time.sleep(2)
+threads = []
+for x, device in enumerate(mgmt_info, 1):
+    print(((device[1]).split(":")[1])[2:], (device[1]).split(":")[-1])
+    keywords = {'auth': False}
+    args = [(device[1]).split(":")[1][2:],
+            int((device[1]).split(":")[-1]),
+            "no\n\n"]
+    th = Thread(target=device_connect, args=args, kwargs=keywords)
+    th.start()
+    threads.append(th)
+for th in threads:
+    th.join()
 print("********** Done! **********")
 time_after = time.time()
 print(

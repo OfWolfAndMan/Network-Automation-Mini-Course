@@ -17,7 +17,8 @@ stop_nodes(cookies, ProjectName)
 print("********** Deleting Networks... **********")
 delete_net(cookies, ProjectName, 1)
 
-for id in address_info.get("data"):
-    x = delete_node(cookies, ProjectName, id)
+if address_info.get("data"):
+    for id in address_info.get("data"):
+        x = delete_node(cookies, ProjectName, id)
 
 delete_lab(cookies, ProjectName)
