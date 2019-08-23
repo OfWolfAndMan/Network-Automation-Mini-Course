@@ -12,10 +12,10 @@ def render_template(Hostname, Template, Model, NOS="IOS", vendor="Cisco", **kwar
     except FileNotFoundError:
         print(f"The template {Template} is not valid!")
 
-    if Template == 'interface':
-        intf_object = L2Interface(kwargs['int_prefix'], kwargs['vlan'])
+    if Template == "interface":
+        intf_object = L2Interface(kwargs["int_prefix"], kwargs["vlan"])
         params["interface"] = intf_object
-    elif Template == 'compliance':
+    elif Template == "compliance":
         pass
 
     if not os.path.exists(DirectoryToAdd):

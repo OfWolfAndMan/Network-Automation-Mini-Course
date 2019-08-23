@@ -27,6 +27,7 @@ def test_login():
     cookies = r.cookies.get_dict()
     return cookies
 
+
 def test_create_lab(test_login):
     cookies = test_login
     if type(cookies) != dict():
@@ -205,4 +206,4 @@ def test_logout(test_login):
     assert r.status_code == 200, "Response code should be 200"
 
 
-#@pytest.mark.xfail(raises=Error)
+# @pytest.mark.xfail(raises=Error)
