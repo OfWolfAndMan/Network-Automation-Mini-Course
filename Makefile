@@ -1,9 +1,8 @@
 
-.PHONY: lintn all-test all-notest init test format
+.PHONY: lint all-test all-notest init test format cleanup
 
-all-test: init test format lint
-
-all-notest: init format lint
+prep-test: init test format lint cleanup
+prep-notest: init format lint cleanup
 
 init:
 	pip install -r requirements.txt
@@ -11,7 +10,6 @@ init:
 test:
 	$(info ************  Running tests ************)
 	pytest -v tests
-	rm -r tests/__pycache__
 
 format:
 	$(info ************  Formatting code to standard ************)
@@ -22,3 +20,8 @@ lint:
 	flake8 . > ./Logs/flake8lint-log.txt
 	$(info ************  Linting YAML files ************)
 	yamllint . > ./Logs/yamllint
+
+cleanup:
+	rm -r tests/__pycache__
+	rm -r .pytest_cache
+

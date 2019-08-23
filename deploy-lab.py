@@ -14,13 +14,14 @@ from EVE_NG.devices import Router
 import time
 import sys
 from threading import Thread
+import os
 
 try:
     ProjectBase = sys.argv[1]
 except IndexError:
     raise Exception("You need to specify a lab name!")
 ProjectName = "{}".format("%20".join(ProjectBase.split()))
-number_of_nodes = 10
+number_of_nodes = 8
 
 time_before = time.time()
 cookies = login()
@@ -34,7 +35,7 @@ print("********** Phase: Deploying Nodes... **********")
 for i in range(0, number_of_nodes):
     node_id = i + 1
     hostname = f"R{node_id}"
-    filepath = os.path.exists(f"./renderedTemplates/{NOS}/{model}/{hostname}.txt")
+    filepath = os.path.exists(f"./renderedTemplates/deployment/{hostname}.txt")
     if not filepath:
         print(f"{hostname} has no configuration file! Skipping...")
         continue
@@ -42,7 +43,7 @@ for i in range(0, number_of_nodes):
     create_node(cookies, router, ProjectName)
     connect_intf(cookies, ProjectName, node_id)
     time.sleep(0.1)
-    with open(f"./renderedTemplates/IOS/4431/{hostname}.txt", "r") as configfile:
+    with open(f"./renderedTemplates/deployment/{hostname}.txt", "r") as configfile:
         config = {"data": configfile.read()}
         test_add_config(cookies, config, ProjectName, node_id)
     base_left += 40

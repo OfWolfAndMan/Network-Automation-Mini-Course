@@ -1,21 +1,23 @@
+---
+
 - Management IP: 4.5.6.7/32
   Model: '3925'
   NOS: 'IOS'
-  Region: Asia
+  Region: Asia-East
   Role: Small Branch Router
   Site: Branch Site B
   TACACS Server: 22.45.66.77
   Vendor: Cisco
-  deviceName: Router-B1
+  deviceName: R1
 - Management IP: 7.1.36.2/32
   Model: '3925'
   NOS: 'IOS'
-  Region: Asia
+  Region: Asia-East
   Role: Small Branch Router
   Site: Branch Site B
   TACACS Server: 55.66.77.89
   Vendor: Cisco
-  deviceName: Router-B2
+  deviceName: R2
 - Management IP: 1.2.3.4/32
   Model: '4431'
   NOS: 'IOS'
@@ -24,7 +26,7 @@
   Site: Branch Site A
   TACACS Server: 22.33.44.71
   Vendor: Cisco
-  deviceName: Router-A1
+  deviceName: R3
 - Management IP: 5.2.10.5/32
   Model: '4431'
   NOS: 'IOS'
@@ -33,4 +35,40 @@
   Site: Branch Site A
   TACACS Server: 12.45.22.13
   Vendor: Cisco
-  deviceName: Router-A2
+  deviceName: R4
+- Management IP: 11.22.41.2/32
+  Model: 'ASR-1002-X'
+  NOS: 'IOS'
+  Region: Asia-East
+  Role: Branch Hub Router
+  Site: Primary Site A
+  TACACS Server: 22.45.66.77
+  Vendor: Cisco
+  deviceName: R5
+- Management IP: 11.95.23.9/32
+  Model: 'ASR-1002-X'
+  NOS: 'IOS'
+  Region: Asia-East
+  Role: Branch Hub Router
+  Site: Primary Site A
+  TACACS Server: 55.66.77.89
+  Vendor: Cisco
+  deviceName: R6
+- Management IP: 11.250.22.39/32
+  Model: '4451-X'
+  NOS: 'IOS'
+  Region: Europe-West
+  Role: Medium Branch Router
+  Site: Branch Site C
+  TACACS Server: 29.32.55.12
+  Vendor: Cisco
+  deviceName: R7
+- Management IP: 5.2.10.5/32
+  Model: '4451-X'
+  NOS: 'IOS'
+  Region: Europe-West
+  Role: Medium Branch Router
+  Site: Branch Site D
+  TACACS Server: 29.32.55.12
+  Vendor: Cisco
+  deviceName: R8

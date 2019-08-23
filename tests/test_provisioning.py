@@ -30,33 +30,33 @@ def test_login():
 
 def test_create_lab(test_login):
     cookies = test_login
-    if type(cookies) != dict():
-        PreviousFailed = True
-    if PreviousFailed:
-        pytest.xfail("Previous test failed. Skipping...")
-    else:
-        data = {
-            "path": "/",
-            "name": "{}".format(ProjectName),
-            "version": "1",
-            "author": "Anthony",
-            "description": "A demo lab",
-            "body": "Lab usage and guide",
-        }
+    # if type(cookies) != dict():
+    #     PreviousFailed = True
+    # if PreviousFailed:
+    #     pytest.xfail("Previous test failed. Skipping...")
+    # else:
+    data = {
+        "path": "/",
+        "name": "{}".format(ProjectName),
+        "version": "1",
+        "author": "Anthony",
+        "description": "A demo lab",
+        "body": "Lab usage and guide",
+    }
 
-        r = requests.request(
-            "POST",
-            f"http://{EVE_HOST}/api/labs",
-            cookies=cookies,
-            json=data,
-            headers=headers,
-        )
-        assert r.status_code == 200, "Response code should be 200"
+    r = requests.request(
+        "POST",
+        f"http://{EVE_HOST}/api/labs",
+        cookies=cookies,
+        json=data,
+        headers=headers,
+    )
+    assert r.status_code == 200, "Response code should be 200"
 
 
 def test_get_lab(test_login):
     cookies = test_login
-    assert type(cookies) == dict()
+    assert cookies != None
     r = requests.request(
         "GET", f"http://{EVE_HOST}/api/labs/{ProjectName}.unl", cookies=cookies
     )
@@ -65,7 +65,7 @@ def test_get_lab(test_login):
 
 def test_create_node(test_login):
     cookies = test_login
-    assert type(cookies) == dict()
+    assert cookies != None
     data = {
         "console": "telnet",
         "delay": 0,
@@ -94,7 +94,7 @@ def test_create_node(test_login):
 
 def test_get_nodes(test_login):
     cookies = test_login
-    assert type(cookies) == dict()
+    assert cookies != None
     r = requests.request(
         "GET",
         f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes",
@@ -106,7 +106,7 @@ def test_get_nodes(test_login):
 
 def test_create_net(test_login):
     cookies = test_login
-    assert type(cookies) == dict()
+    assert cookies != None
     defaults = {
         "count": 0,
         "left": 588,
@@ -127,7 +127,7 @@ def test_create_net(test_login):
 
 def test_get_net(test_login):
     cookies = test_login
-    assert type(cookies) == dict()
+    assert cookies != None
     r = requests.request(
         "GET",
         f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/networks",
@@ -139,6 +139,7 @@ def test_get_net(test_login):
 
 def test_connect_intf(test_login):
     cookies = test_login
+    assert cookies != None
     data = {"0": "1"}
     r = requests.request(
         "PUT",
@@ -152,6 +153,7 @@ def test_connect_intf(test_login):
 
 def test_start_nodes(test_login):
     cookies = test_login
+    assert cookies != None
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/start"
 
     r = requests.request("GET", url, headers=headers, cookies=cookies)
@@ -161,6 +163,7 @@ def test_start_nodes(test_login):
 
 def test_stop_nodes(test_login):
     cookies = test_login
+    assert cookies != None
     url = f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/stop"
 
     r = requests.request("GET", url, headers=headers, cookies=cookies)
@@ -170,6 +173,7 @@ def test_stop_nodes(test_login):
 
 def test_delete_net(test_login):
     cookies = test_login
+    assert cookies != None
     r = requests.request(
         "DELETE",
         f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/networks/1",
@@ -181,6 +185,7 @@ def test_delete_net(test_login):
 
 def test_delete_node(test_login):
     cookies = test_login
+    assert cookies != None
     r = requests.request(
         "DELETE",
         f"http://{EVE_HOST}/api/labs/{ProjectName}.unl/nodes/1",
@@ -192,6 +197,7 @@ def test_delete_node(test_login):
 
 def test_delete_lab(test_login):
     cookies = test_login
+    assert cookies != None
     r = requests.request(
         "DELETE", f"http://{EVE_HOST}/api/labs/{ProjectName}.unl", cookies=cookies
     )
