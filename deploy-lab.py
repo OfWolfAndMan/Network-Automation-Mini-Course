@@ -11,7 +11,6 @@ from EVE_NG.test_provisioning import (
     device_connect,
 )
 from EVE_NG.devices import Router
-from resources import path_exists
 import time
 import sys
 from threading import Thread
@@ -35,7 +34,7 @@ print("********** Phase: Deploying Nodes... **********")
 for i in range(0, number_of_nodes):
     node_id = i + 1
     hostname = f"R{node_id}"
-    filepath = path_exists(hostname, "config", "4431")
+    filepath = os.path.exists(f"./renderedTemplates/{NOS}/{model}/{hostname}.txt")
     if not filepath:
         print(f"{hostname} has no configuration file! Skipping...")
         continue
