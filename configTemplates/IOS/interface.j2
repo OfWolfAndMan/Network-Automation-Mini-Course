@@ -1,3 +1,5 @@
+{% extends base.j2 %}
+
 {% for n in range(24) %}
 
 interface {{ interface.intname }}{{ n + 1}}
@@ -17,3 +19,5 @@ interface {{ interface.intname }}{{ n + 1}}
 
 {%- endif %}
 {%- endfor %}
+
+alias exec {switch.model}-BASE {switch.vendor}_{switch.model}_INTERFACE_v1

@@ -1,12 +1,14 @@
-- template: lockdown
-  description: Disables telnet on a network device
+- config: transport input ssh
+  parent: line vty 0 4
+  description: Enables only SSH on the VTY line
   device_types:
   - router
   - switch
   id: ba0c7f6b1b6552683caddc578efb4813
-  name: Telnet disable
+  name: SSH only VTY
   platform: IOS
-- template: lockdown
+- config: ip ssh version 2
+  parent: None
   description: SSH version 2 is enabled on a network device
   device_types:
   - router
@@ -14,7 +16,8 @@
   id: 9b462685c56fde6bcbda0615b1f4a250
   name: SSH Version 2
   platform: IOS
-- template: lockdown
+- config: no ip http-server
+  parent: None
   description: Disables the HTTP server on a network device
   device_types:
   - router
@@ -22,21 +25,25 @@
   id: b931a90f7782a1cd205a177ec37b4255
   name: Disable HTTP server
   platform: IOS
-- template: vtp
+- config: vtp version 3
+  parent: None
   description: VTP version 3 must be enabled on all switches
   device_types:
   - switch
   id: 08b0bfd388e774159a8119645127e90b
   name: VTP Version 3
   platform: IOS
-- description: Disables IP domain lookup on a network device
+- config: no ip domain lookup
+  parent: None
+  description: Disables IP domain lookup on a network device
   device_types:
   - router
   - switch
   id: 7d1f5bf3dd2c1946514214b407b6ec54
   name: Disable Domain lookup
   platform: IOS
-- template: lockdown
+- config: no ip domain lookup
+  parent: None
   description: Disables IP domain lookup on a network device
   device_types:
   - router

@@ -14,8 +14,12 @@ from EVE_NG.devices import Router
 from resources import path_exists
 import time
 import sys
+from threading import Thread
 
-ProjectBase = sys.argv[1]
+try:
+    ProjectBase = sys.argv[1]
+except IndexError:
+    raise Exception("You need to specify a lab name!")
 ProjectName = "{}".format("%20".join(ProjectBase.split()))
 number_of_nodes = 10
 

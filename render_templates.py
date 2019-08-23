@@ -1,5 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 import os
+from configTemplates.objects import L2Interface
 
 
 def render_template(Hostname, Template, Model, NOS="IOS"):
@@ -9,21 +10,6 @@ def render_template(Hostname, Template, Model, NOS="IOS"):
         template = ENV.get_template(f"{Template}.j2")
     except FileNotFoundError:
         print("The file was not found!")
-
-    class L2Interface(object):
-        def __init__(
-            self,
-            intname,
-            trunk_description="<===Trunk Port===>",
-            host_description="<===User Port===>",
-            vlan=10,
-            voice_vlan=20,
-        ):
-            self.trunk_description = trunk_description
-            self.host_description = host_description
-            self.intname = intname
-            self.vlan = vlan
-            self.voice_vlan = voice_vlan
 
     intf_object = L2Interface("GigabitEthernet0/", vlan=15)
 
