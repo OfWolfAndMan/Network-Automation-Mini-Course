@@ -9,4 +9,4 @@ configured in the config policy API.
 
 
 ## Workflow
-![Alt Text](workflow.png?raw=True)
+![Alt Text](Workflow.png?raw=True)
