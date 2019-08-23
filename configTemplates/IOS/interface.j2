@@ -1,5 +1,5 @@
-{% extends base.j2 %}
-
+{% extends 'base.j2' %}
+{% block interfaces %}
 {% for n in range(24) %}
 
 interface {{ interface.intname }}{{ n + 1}}
@@ -16,8 +16,8 @@ interface {{ interface.intname }}{{ n + 1}}
 {%- endif %}
 {%- if n+1 > 10 and n+1 < 22 %}
  switchport voice vlan {{ interface.voice_vlan }}
-
 {%- endif %}
 {%- endfor %}
 
-alias exec {switch.model}-BASE {switch.vendor}_{switch.model}_INTERFACE_v1
+alias exec {{ model }}-BASE {{ vendor }}_{{ model }}_INTERFACE_v1
+{%- endblock %}

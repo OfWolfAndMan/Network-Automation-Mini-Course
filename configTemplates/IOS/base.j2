@@ -5,12 +5,13 @@ service timestamps debug datetime msec show-timezone
 service timestamps log datetime msec show-timezone
 
 no ip domain lookup
-hostname {router.hostname}
+hostname {{ hostname }}
 
 no ip source-route
 no ip gratuitous-arps
 no ip domain-lookup
 no ip bootp server
-
-alias exec {router.model}-BASE {router.vendor}_{router.model}_BASE_v1
+{%- block interfaces %} {%- endblock %}
+{%- block compliance %} {%- endblock %}
+alias exec {{ model }}-BASE {{ vendor }}_{{ model }}_BASE_v1
 
