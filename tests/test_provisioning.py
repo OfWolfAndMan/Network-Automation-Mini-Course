@@ -1,6 +1,7 @@
 import requests
 import os
 import pytest
+import telnetlib
 
 ####################################################################
 # Environment variables required to be set prior to running this
@@ -159,6 +160,11 @@ def test_start_nodes(test_login):
     r = requests.request("GET", url, headers=headers, cookies=cookies)
 
     assert r.status_code == 200, "Response code should be 200"
+
+def test_device_connect():
+    connection = telnetlib.Telnet(EVE_HOST, "32769")
+    assert connection
+    connection.close()
 
 
 def test_stop_nodes(test_login):

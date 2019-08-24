@@ -1,4 +1,4 @@
-from EVE_NG.test_provisioning import (
+from test_provisioning import (
     login,
     create_lab,
     test_add_config,
@@ -10,7 +10,7 @@ from EVE_NG.test_provisioning import (
     connect_intf,
     device_connect,
 )
-from EVE_NG.devices import Router
+from devices import Router
 import time
 import sys
 from threading import Thread

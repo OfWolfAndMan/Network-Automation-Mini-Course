@@ -1,5 +1,5 @@
 from render_templates import render_template
-from resources import yaml_function
+from shared.resources import yaml_function
 
 devices = yaml_function("APIs/lab_devices.yml", "load")
 

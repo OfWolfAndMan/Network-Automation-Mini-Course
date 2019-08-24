@@ -1,4 +1,4 @@
-from EVE_NG.test_provisioning import (
+from test_provisioning import (
     login,
     delete_lab,
     delete_node,
@@ -8,7 +8,10 @@ from EVE_NG.test_provisioning import (
 )
 import sys
 
-ProjectName = "{}".format("%20".join(sys.argv[1].split()))
+try:
+    ProjectName = "{}".format("%20".join(sys.argv[1].split()))
+except IndexError:
+    raise Exception("You need to specify a lab name!")
 
 cookies = login()
 address_info = get_nodes(cookies, ProjectName)

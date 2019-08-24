@@ -1,6 +1,12 @@
-from resources import yaml_function
 from flask import Flask, request, jsonify
 from secrets import token_hex
+if __name__ == "__main__" and __package__ is None:
+    from sys import path
+    from os.path import dirname as dir
+
+    path.append(dir(path[0]))
+    __package__ = "APIs"
+from shared.resources import yaml_function
 
 app = Flask(__name__)
 
@@ -8,11 +14,11 @@ app = Flask(__name__)
 @app.route("/api/v1/devices/<string:device>/")
 def get_device(device: str):
     """Gets metadata for a specific device"""
-    devices = yaml_function("lab_devices.yml", "load")
+    devices = yaml_function("./APIs/lab_devices.yml", "load")
     for a_device in devices:
         if a_device.get("deviceName") == device:
-            return a_device
-        return jsonify(f"Device {device} not found!"), 404
+            return jsonify({'data': a_device}), 200
+    return jsonify({'error': f"Device {device} not found!"}), 404
 
 
 @app.route("/api/v1/config/compliance/", methods=["GET", "POST"])
@@ -29,8 +35,8 @@ def get_config_policies():
     platforms = ["IOS", "IOS-XR", "NX-OS", "EOS"]
     device_types = ["router", "switch", "firewall", "load-balancer"]
     if request.method == "GET":
-        config_policies = yaml_function("config_policies.yml", "load")
-        return jsonify(config_policies), 200
+        config_policies = yaml_function("./APIs/config_policies.yml", "load")
+        return jsonify({'data': config_policies}), 200
 
     elif request.method == "POST":
         if len(request.json) != 4:
@@ -77,7 +83,7 @@ def get_config_policies():
 @app.route("/api/v1/config/compliance/<string:id>", methods=["DELETE"])
 def delete_config_policy(id: str):
     """Deletes config compliance policy based on its respective id"""
-    config_policies = yaml_function("config_policies.yml", "load")
+    config_policies = yaml_function("./APIs/config_policies.yml", "load")
     for policy in config_policies:
         if policy.get("id") == id:
             config_policies.remove(policy)

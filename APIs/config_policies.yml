@@ -1,5 +1,4 @@
 ---
-
 - config: transport input ssh
   parent: line vty 0 4
   description: Enables only SSH on the VTY line
