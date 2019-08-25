@@ -60,6 +60,7 @@ __pycache__/
 .vscode
 EVE_NG/provisioning.py
 EVE_NG/device*.py
+renderedTemplates/
 
 # Project-Specific
 DigiCertGlobalRootCA.crt
