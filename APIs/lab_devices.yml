@@ -1,6 +1,6 @@
 ---
 
-- Management IP: 4.5.6.7/32
+- Management IP: 192.168.170.130/24
   Model: '3925'
   NOS: 'IOS'
   Region: Asia-East
@@ -9,7 +9,7 @@
   TACACS Server: 22.45.66.77
   Vendor: Cisco
   deviceName: R1
-- Management IP: 7.1.36.2/32
+- Management IP: 192.168.170.131/24
   Model: '3925'
   NOS: 'IOS'
   Region: Asia-East
@@ -18,7 +18,7 @@
   TACACS Server: 55.66.77.89
   Vendor: Cisco
   deviceName: R2
-- Management IP: 1.2.3.4/32
+- Management IP: 192.168.170.132/24
   Model: '4431'
   NOS: 'IOS'
   Region: Americas
@@ -27,7 +27,7 @@
   TACACS Server: 22.33.44.71
   Vendor: Cisco
   deviceName: R3
-- Management IP: 5.2.10.5/32
+- Management IP: 192.168.170.133/24
   Model: '4431'
   NOS: 'IOS'
   Region: Americas
@@ -36,7 +36,7 @@
   TACACS Server: 12.45.22.13
   Vendor: Cisco
   deviceName: R4
-- Management IP: 11.22.41.2/32
+- Management IP: 192.168.170.134/24
   Model: 'ASR-1002-X'
   NOS: 'IOS'
   Region: Asia-East
@@ -45,7 +45,7 @@
   TACACS Server: 22.45.66.77
   Vendor: Cisco
   deviceName: R5
-- Management IP: 11.95.23.9/32
+- Management IP: 192.168.170.135/24
   Model: 'ASR-1002-X'
   NOS: 'IOS'
   Region: Asia-East
@@ -54,7 +54,7 @@
   TACACS Server: 55.66.77.89
   Vendor: Cisco
   deviceName: R6
-- Management IP: 11.250.22.39/32
+- Management IP: 192.168.170.136/24
   Model: '4451-X'
   NOS: 'IOS'
   Region: Europe-West
@@ -63,7 +63,7 @@
   TACACS Server: 29.32.55.12
   Vendor: Cisco
   deviceName: R7
-- Management IP: 5.2.10.5/32
+- Management IP: 192.168.170.137/24
   Model: '4451-X'
   NOS: 'IOS'
   Region: Europe-West

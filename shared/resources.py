@@ -10,14 +10,22 @@ s = sched.scheduler(time.time, time.sleep)
 
 
 def get_response_code(r):
-    if 40 in r.status_code:
-        raise Exception(r.json())
-    elif 50 in r.status_code:
-        raise Exception(r.json())
-    elif 30 in r.status_code:
-        raise Exception(r.json())
-    elif 20 not in r.status_code:
-        raise Exception(f"An error occured! The error was {r.status_code}")
+    if "40" in str(r.status_code):
+        raise Exception(
+            f"A request error occurred! error was {r.status_code}: {r.json().get('message')}"
+        )
+    elif "50" in str(r.status_code):
+        raise Exception(
+            f"A server error occurred! The error was {r.status_code}: {r.json().get('message')}"
+        )
+    elif "30" in str(r.status_code):
+        raise Exception(
+            f"A redirect error occurred! The error was {r.status_code}: {r.json().get('message')}"
+        )
+    elif "20" not in str(r.status_code):
+        raise Exception(
+            f"An error occurred! The error was {r.status_code}: {r.json().get('message')}"
+        )
 
 
 def connect_to_api(
@@ -26,34 +34,11 @@ def connect_to_api(
     methods = ["GET", "PUT", "PATCH", "DELETE", "POST"]
     if method not in methods:
         raise ValueError("Not a valid HTTP method!")
-    if headers and auth:
-        r = requests.request(method, uri, auth=auth, headers=headers)
-        get_response_code(r)
-    elif headers:
-        r = requests.request(method, uri, headers=headers)
-        get_response_code(r)
-    elif data:
-        r = requests.request(method, uri, data=data)
-        get_response_code(r)
-    elif headers and data:
-        r = requests.request(method, uri, headers=headers, data=data)
-        get_response_code(r)
-    elif headers and data and auth:
-        r = requests.request(method, uri, headers=headers, auth=auth, data=data)
-        get_response_code(r)
-    elif headers and json:
-        r = requests.request(method, uri, headers=headers, json=json)
-        get_response_code(r)
-    elif cookies and headers and json:
-        r = requests.request(method, uri, headers=headers, json=json, cookies=cookies)
-        get_response_code(r)
-    elif auth:
-        r = requests.request(method, uri, auth=auth)
-        get_response_code(r)
-    else:
-        r = requests.request(method, uri)
-        get_response_code(r)
-    return r.json()
+    r = requests.request(
+        method, uri, headers=headers, auth=auth, data=data, json=json, cookies=cookies
+    )
+    get_response_code(r)
+    return r
 
 
 def yaml_function(file, operation, data=None):
@@ -78,7 +63,6 @@ def send_slack(hostname, type, address):
 
 
 def load_api_data():
-    """Can use Netbox API"""
     api_hostname = os.getenv("API_HOSTNAME", "127.0.0.1")
     api_port = os.getenv("API_PORT", "8080")
     """Supplying Auth token as an env variable is REQUIRED"""

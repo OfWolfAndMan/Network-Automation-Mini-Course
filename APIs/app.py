@@ -11,6 +11,11 @@ from shared.resources import yaml_function
 
 app = Flask(__name__)
 
+@app.route("/api/v1/devices/")
+def get_devices():
+    """Gets metadata for a specific device"""
+    devices = yaml_function("./APIs/lab_devices.yml", "load")
+    return jsonify({"data": devices}), 200
 
 @app.route("/api/v1/devices/<string:device>/")
 def get_device(device: str):
