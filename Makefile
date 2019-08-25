@@ -1,5 +1,5 @@
 
-.PHONY: lint all-test all-notest init test format prep-cleanup cleanup deploy stop-api destroy-lab
+.PHONY: lint all-test all-notest init test format prep-cleanup cleanup deploy stop-api destroy-lab workflow
 
 prep-test: init test format lint prep-cleanup
 prep-notest: init format lint prep-cleanup
@@ -29,6 +29,7 @@ prep-cleanup:
 
 stop-api: server.PID
 	kill `cat $<` && rm $<
+	rm server.PID
 
 deploy:
 # 	export FLASK_ENV=development && \
@@ -37,6 +38,9 @@ deploy:
 	python3 ./APIs/app.py & echo $$! > server.PID
 	sleep 2
 	python3 ./deploy-lab.py "My New Lab"
+
+workflow:
+	python3 ./pre-checks.py
 
 destroy-lab:
 	python3 ./destroy-lab.py "My New Lab"
