@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from secrets import token_hex
+
 if __name__ == "__main__" and __package__ is None:
     from sys import path
     from os.path import dirname as dir
@@ -17,8 +18,8 @@ def get_device(device: str):
     devices = yaml_function("./APIs/lab_devices.yml", "load")
     for a_device in devices:
         if a_device.get("deviceName") == device:
-            return jsonify({'data': a_device}), 200
-    return jsonify({'error': f"Device {device} not found!"}), 404
+            return jsonify({"data": a_device}), 200
+    return jsonify({"error": f"Device {device} not found!"}), 404
 
 
 @app.route("/api/v1/config/compliance/", methods=["GET", "POST"])
@@ -36,7 +37,7 @@ def get_config_policies():
     device_types = ["router", "switch", "firewall", "load-balancer"]
     if request.method == "GET":
         config_policies = yaml_function("./APIs/config_policies.yml", "load")
-        return jsonify({'data': config_policies}), 200
+        return jsonify({"data": config_policies}), 200
 
     elif request.method == "POST":
         if len(request.json) != 4:

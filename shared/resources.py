@@ -10,26 +10,48 @@ s = sched.scheduler(time.time, time.sleep)
 
 
 def get_response_code(r):
-    if r.status_code == 403:
-        raise Exception("Request error! You neeed to provide authentication!")
-    elif r.status_code != 200:
+    if 40 in r.status_code:
+        raise Exception(r.json())
+    elif 50 in r.status_code:
+        raise Exception(r.json())
+    elif 30 in r.status_code:
+        raise Exception(r.json())
+    elif 20 not in r.status_code:
         raise Exception(f"An error occured! The error was {r.status_code}")
-    else:
-        return "Connected successfully! Pulling API response."
 
 
-def connect_to_api(uri, headers=None, auth=None):
+def connect_to_api(
+    method, uri, headers=None, auth=None, data=None, json=None, cookies=None
+):
+    methods = ["GET", "PUT", "PATCH", "DELETE", "POST"]
+    if method not in methods:
+        raise ValueError("Not a valid HTTP method!")
     if headers and auth:
-        r = requests.get(uri, auth=auth, headers=headers)
+        r = requests.request(method, uri, auth=auth, headers=headers)
         get_response_code(r)
     elif headers:
-        r = requests.get(uri, headers=headers)
+        r = requests.request(method, uri, headers=headers)
+        get_response_code(r)
+    elif data:
+        r = requests.request(method, uri, data=data)
+        get_response_code(r)
+    elif headers and data:
+        r = requests.request(method, uri, headers=headers, data=data)
+        get_response_code(r)
+    elif headers and data and auth:
+        r = requests.request(method, uri, headers=headers, auth=auth, data=data)
+        get_response_code(r)
+    elif headers and json:
+        r = requests.request(method, uri, headers=headers, json=json)
+        get_response_code(r)
+    elif cookies and headers and json:
+        r = requests.request(method, uri, headers=headers, json=json, cookies=cookies)
         get_response_code(r)
     elif auth:
-        r = requests.get(uri, auth=auth)
+        r = requests.request(method, uri, auth=auth)
         get_response_code(r)
     else:
-        r = requests.get(uri)
+        r = requests.request(method, uri)
         get_response_code(r)
     return r.json()
 
@@ -61,8 +83,8 @@ def load_api_data():
     api_port = os.getenv("API_PORT", "8080")
     """Supplying Auth token as an env variable is REQUIRED"""
     api_auth = os.getenv("API_AUTH", None)
-    r = connect_to_api(
-        f"http://{api_hostname}:{api_port}/api/dcim/devices/", headers=api_auth
+    r = requests.request(
+        "GET", f"http://{api_hostname}:{api_port}/api/dcim/devices/", headers=api_auth
     )
 
     my_devices = []

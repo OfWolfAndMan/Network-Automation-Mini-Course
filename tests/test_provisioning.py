@@ -161,6 +161,7 @@ def test_start_nodes(test_login):
 
     assert r.status_code == 200, "Response code should be 200"
 
+
 def test_device_connect():
     connection = telnetlib.Telnet(EVE_HOST, "32769")
     assert connection

@@ -1,4 +1,4 @@
-from test_provisioning import (
+from provisioning import (
     login,
     create_lab,
     test_add_config,
@@ -49,6 +49,7 @@ for i in range(0, number_of_nodes):
     base_left += 40
     base_top += 50
 
+print("********** Phase: Starting Nodes... **********")
 start_nodes(cookies, ProjectName)
 address_info = get_nodes(cookies, ProjectName)
 logout(cookies)

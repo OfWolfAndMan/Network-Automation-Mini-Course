@@ -1,4 +1,4 @@
-from test_provisioning import (
+from provisioning import (
     login,
     delete_lab,
     delete_node,
