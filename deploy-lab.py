@@ -18,6 +18,7 @@ import os
 from EVE_NG.resources import connect_to_api
 from render_templates import render_template
 from ipaddress import IPv4Interface
+from shared.storage import all_devices
 
 try:
 	ProjectBase = sys.argv[1]
@@ -29,6 +30,7 @@ my_devices = my_devices.json().get("data")
 number_of_nodes = len(my_devices)
 print("********** Rendering Templates... **********")
 for device in my_devices:
+	all_devices.append(device)
 	if device["NOS"] == "IOS":
 		mgmt_ip = f"{device['Management IP'].split('/')[0]} {IPv4Interface(device['Management IP']).with_netmask.split('/')[1]}"
 	render_template(device["deviceName"], "initial", NOS=device["NOS"], mgmt_ip=mgmt_ip)
@@ -70,14 +72,14 @@ print("********** Finalizing Provisioning... **********")
 time.sleep(2)
 threads = []
 for x, device in enumerate(mgmt_info, 1):
-    print(((device[1]).split(":")[1])[2:], (device[1]).split(":")[-1])
-    keywords = {"auth": False}
-    args = [(device[1]).split(":")[1][2:], int((device[1]).split(":")[-1]), "no\n\n"]
-    th = Thread(target=device_connect, args=args, kwargs=keywords)
-    th.start()
-    threads.append(th)
+	print(((device[1]).split(":")[1])[2:], (device[1]).split(":")[-1])
+	keywords = {"auth": False}
+	args = [(device[1]).split(":")[1][2:], int((device[1]).split(":")[-1]), "no\n\n"]
+	th = Thread(target=device_connect, args=args, kwargs=keywords)
+	th.start()
+	threads.append(th)
 for th in threads:
-    th.join()
+	th.join()
 print("********** Done! **********")
 time_after = time.time()
 print(

@@ -5,6 +5,7 @@ import time
 import threading
 import slack
 import os
+from shared.storage import NOSes
 
 s = sched.scheduler(time.time, time.sleep)
 
@@ -122,3 +123,8 @@ def thread_update():
 
     thread = threading.Thread(target=recurrent_update)
     thread.start()
+
+def store_network_os(devices):
+    for device in devices:
+        if device.get("NOS") not in NOSes:
+            NOSes.append(device.get("NOS"))
