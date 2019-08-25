@@ -1,0 +1,8 @@
+hostname {{ hostname }}
+username admin secret mysecret
+int Man1
+ ip address {{ mgmt_ip }}
+ no shutdown
+management ssh
+ no shutdown
+ip route 0.0.0.0/0 192.168.170.1

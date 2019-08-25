@@ -10,7 +10,7 @@ from EVE_NG.provisioning import (
     connect_intf,
     device_connect,
 )
-from EVE_NG.devices import Router
+from EVE_NG.devices import Router, Switch
 import time
 import sys
 from threading import Thread
@@ -18,6 +18,7 @@ import os
 from EVE_NG.resources import connect_to_api
 from render_templates import render_template
 from ipaddress import IPv4Interface
+from shared.storage import connect_mapping_table
 
 try:
 	ProjectBase = sys.argv[1]
@@ -31,6 +32,8 @@ print("********** Rendering Templates... **********")
 for device in my_devices:
 	if device["NOS"] == "IOS":
 		mgmt_ip = f"{device['Management IP'].split('/')[0]} {IPv4Interface(device['Management IP']).with_netmask.split('/')[1]}"
+	else:
+		mgmt_ip = device.get('Management IP')
 	render_template(device["deviceName"], "initial", NOS=device["NOS"], mgmt_ip=mgmt_ip)
 time_before = time.time()
 cookies = login()
@@ -41,18 +44,19 @@ base_top = 50
 print("********** Deploying Cloud Connection... **********")
 create_net(cookies, ProjectName)
 print("********** Phase: Deploying Nodes... **********")
-for i in range(0, number_of_nodes):
-	node_id = i + 1
-	hostname = f"R{node_id}"
-	filepath = os.path.exists(f"./renderedTemplates/deployment/{hostname}.txt")
+for node_id, device in enumerate(my_devices, 1):
+	filepath = os.path.exists(f"./renderedTemplates/deployment/{device.get('deviceName')}.txt")
 	if not filepath:
-		print(f"{hostname} has no configuration file! Skipping...")
+		print(f"{device.get('deviceName')} has no configuration file! Skipping...")
 		continue
-	router = Router(hostname, left=base_left, top=base_top).to_json()
-	create_node(cookies, router, ProjectName)
+	if device.get('NOS') == "EOS":
+		dev_object = Switch(device.get("deviceName"), left=base_left, top=base_top).to_json()
+	elif device.get('NOS') == "IOS":
+		dev_object = Router(device.get("deviceName"), left=base_left, top=base_top).to_json()
+	create_node(cookies, dev_object, ProjectName)
 	connect_intf(cookies, ProjectName, node_id)
 	time.sleep(0.1)
-	with open(f"./renderedTemplates/deployment/{hostname}.txt", "r") as configfile:
+	with open(f"./renderedTemplates/deployment/{device.get('deviceName')}.txt", "r") as configfile:
 		config = {"data": configfile.read()}
 		test_add_config(cookies, config, ProjectName, node_id)
 	base_left += 40
@@ -70,12 +74,13 @@ print("********** Finalizing Provisioning... **********")
 time.sleep(2)
 threads = []
 for x, device in enumerate(mgmt_info, 1):
-	# print(((device[1]).split(":")[1])[2:], (device[1]).split(":")[-1])
-	keywords = {"auth": False}
-	args = [(device[1]).split(":")[1][2:], int((device[1]).split(":")[-1]), "no\n\n"]
-	th = Thread(target=device_connect, args=args, kwargs=keywords)
-	th.start()
-	threads.append(th)
+	NOS = [a_device.get("NOS") for a_device in my_devices if a_device.get("deviceName") == mgmt_info[x - 1][0]]
+	if NOS[0] == "IOS":
+		keywords = {"auth": False, "device_type": connect_mapping_table.get(NOS[0])}
+		args = [(device[1]).split(":")[1][2:], int((device[1]).split(":")[-1]), "no\n\n"]
+		th = Thread(target=device_connect, args=args, kwargs=keywords)
+		th.start()
+		threads.append(th)
 for th in threads:
 	th.join()
 print("********** Done! **********")

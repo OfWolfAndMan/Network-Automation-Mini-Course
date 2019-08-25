@@ -1,45 +1,41 @@
----
 - config: transport input ssh
-  parent: line vty 0 4
   description: Enables only SSH on the VTY line
-  device_types:
-  - router
-  - switch
+  device_types: [router, switch]
   id: ba0c7f6b1b6552683caddc578efb4813
   name: SSH only VTY
+  parent: line vty 0 4
   platform: IOS
 - config: ip ssh version 2
-  parent: None
   description: SSH version 2 is enabled on a network device
-  device_types:
-  - router
-  - switch
+  device_types: [router, switch]
   id: 9b462685c56fde6bcbda0615b1f4a250
   name: SSH Version 2
+  parent: None
   platform: IOS
 - config: no ip http server
-  parent: None
   description: Disables the HTTP server on a network device
-  device_types:
-  - router
-  - switch
+  device_types: [router, switch]
   id: b931a90f7782a1cd205a177ec37b4255
   name: Disable HTTP server
+  parent: None
   platform: IOS
 - config: vtp version 3
-  parent: None
   description: VTP version 3 must be enabled on all switches
-  device_types:
-  - switch
+  device_types: [switch]
   id: 08b0bfd388e774159a8119645127e90b
   name: VTP Version 3
+  parent: None
   platform: IOS
 - config: no ip domain lookup
-  parent: None
   description: Disables IP domain lookup on a network device
-  device_types:
-  - router
-  - switch
+  device_types: [router, switch]
   id: 7d1f5bf3dd2c1946514214b407b6ec54
   name: Disable Domain lookup
+  parent: None
   platform: IOS
+- config: no lldp run
+  description: Disables LLDP for a switch
+  device_types: [switch]
+  id: 7b5faad46c21ea88d5b680c6660e106c
+  name: Disable LLDP Globally
+  platform: EOS

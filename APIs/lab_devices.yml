@@ -2,7 +2,7 @@
 
 - Management IP: 192.168.170.130/24
   Model: '3925'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Asia-East
   Role: Small Branch Router
   Site: Branch Site B
@@ -11,7 +11,7 @@
   deviceName: R1
 - Management IP: 192.168.170.131/24
   Model: '3925'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Asia-East
   Role: Small Branch Router
   Site: Branch Site B
@@ -20,7 +20,7 @@
   deviceName: R2
 - Management IP: 192.168.170.132/24
   Model: '4431'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Americas
   Role: Small Branch Router
   Site: Branch Site A
@@ -29,7 +29,7 @@
   deviceName: R3
 - Management IP: 192.168.170.133/24
   Model: '4431'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Americas
   Role: Small Branch Router
   Site: Branch Site A
@@ -38,7 +38,7 @@
   deviceName: R4
 - Management IP: 192.168.170.134/24
   Model: 'ASR-1002-X'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Asia-East
   Role: Branch Hub Router
   Site: Primary Site A
@@ -47,7 +47,7 @@
   deviceName: R5
 - Management IP: 192.168.170.135/24
   Model: 'ASR-1002-X'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Asia-East
   Role: Branch Hub Router
   Site: Primary Site A
@@ -56,7 +56,7 @@
   deviceName: R6
 - Management IP: 192.168.170.136/24
   Model: '4451-X'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Europe-West
   Role: Medium Branch Router
   Site: Branch Site C
@@ -65,10 +65,19 @@
   deviceName: R7
 - Management IP: 192.168.170.137/24
   Model: '4451-X'
-  NOS: 'IOS'
+  NOS: IOS
   Region: Europe-West
   Role: Medium Branch Router
   Site: Branch Site D
   TACACS Server: 29.32.55.12
   Vendor: Cisco
   deviceName: R8
+- Management IP: 192.168.170.138/24
+  Model: vEOS
+  NOS: EOS
+  Region: Europe-West
+  Role: Medium Branch Switch
+  Site: Branch Site D
+  TACACS Server: 29.32.55.12
+  Vendor: Arista
+  deviceName: R9

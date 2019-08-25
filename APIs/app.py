@@ -36,7 +36,7 @@ def get_config_policies():
         "description": "Disables telnet on Cisco devices per security requirement 1234",
         "platform": "IOS",
         "device_types": ["router", "switch"],
-        "template": "lockdown",
+        "config": "no transport input telnet"
     }
     platforms = ["IOS", "IOS-XR", "NX-OS", "EOS"]
     device_types = ["router", "switch", "firewall", "load-balancer"]
@@ -45,7 +45,7 @@ def get_config_policies():
         return jsonify({"data": config_policies}), 200
 
     elif request.method == "POST":
-        if len(request.json) != 4:
+        if len(request.json) != 5:
             return jsonify({"A required field is missing! Valid fields": schema}), 400
         for field in list(request.json):
             if field not in schema.keys():
@@ -72,7 +72,7 @@ def get_config_policies():
                     ),
                     400,
                 )
-        data = yaml_function("config_policies.yml", "load")
+        data = yaml_function("./APIs/config_policies.yml", "load")
         for entry in data:
             if (
                 entry["name"].lower() == request.json["name"].lower()
@@ -82,7 +82,7 @@ def get_config_policies():
         new_data = request.json
         new_data["id"] = token_hex(16)
         data.append(new_data)
-        yaml_function("config_policies.yml", "dump", data=data)
+        yaml_function("./APIs/config_policies.yml", "dump", data=data)
         return jsonify({"data": request.json}), 201
 
 
