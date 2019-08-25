@@ -70,7 +70,7 @@ print("********** Finalizing Provisioning... **********")
 time.sleep(2)
 threads = []
 for x, device in enumerate(mgmt_info, 1):
-	print(((device[1]).split(":")[1])[2:], (device[1]).split(":")[-1])
+	# print(((device[1]).split(":")[1])[2:], (device[1]).split(":")[-1])
 	keywords = {"auth": False}
 	args = [(device[1]).split(":")[1][2:], int((device[1]).split(":")[-1]), "no\n\n"]
 	th = Thread(target=device_connect, args=args, kwargs=keywords)

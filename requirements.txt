@@ -12,3 +12,4 @@ flake8
 yamllint
 pytest
 pytest-cov
+ciscoconfparse

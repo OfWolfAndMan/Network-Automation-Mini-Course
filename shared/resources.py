@@ -6,6 +6,7 @@ import threading
 import slack
 import os
 from shared.storage import NOSes
+from ciscoconfparse import CiscoConfParse
 
 s = sched.scheduler(time.time, time.sleep)
 
@@ -128,3 +129,11 @@ def store_network_os(devices):
 	for device in devices:
 		if device.get("NOS") not in NOSes:
 			NOSes.append(device.get("NOS"))
+
+def parse_policy(policy, configFile):
+	parse = CiscoConfParse(configFile)
+	if policy[0]:
+		object = parse.find_parents_w_child(policy[0], policy[1])
+	else:
+		object = parse.find_objects(policy[1])
+	return object

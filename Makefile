@@ -41,6 +41,7 @@ deploy:
 
 workflow:
 	python3 ./pre-checks.py
+	python3 ./main.py
 
 destroy-lab:
 	python3 ./destroy-lab.py "My New Lab"
