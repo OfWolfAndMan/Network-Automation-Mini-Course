@@ -15,7 +15,7 @@ with open(f"./compliance/reports/report-{current.strftime('%d-%m-%Y_%H:%M:%S')}.
 		viol_id = 1
 		file.write(f"\n********** Host {device.get('deviceName')} ********** \n")
 		for policy in my_policies:
-			if policy.get("platform") == device.get("NOS") and 'router' in policy.get('device_types'):
+			if policy.get("platform") == device.get("NOS") and device.get("Role").split()[2].lower() in policy.get('device_types'):
 				if policy.get("parent") != 'None':
 					configPair = (policy.get('parent'), policy.get('config'))
 				else:
