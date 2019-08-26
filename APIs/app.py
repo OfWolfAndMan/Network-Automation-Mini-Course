@@ -86,7 +86,7 @@ def get_config_policies():
         return jsonify({"data": request.json}), 201
 
 
-@app.route("/api/v1/config/compliance/<string:id>", methods=["DELETE"])
+@app.route("/api/v1/config/compliance/<string:id>/", methods=["DELETE"])
 def delete_config_policy(id: str):
     """Deletes config compliance policy based on its respective id"""
     config_policies = yaml_function("./APIs/config_policies.yml", "load")
