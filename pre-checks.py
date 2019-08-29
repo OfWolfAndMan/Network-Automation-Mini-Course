@@ -9,13 +9,16 @@ my_devices = my_devices.json().get("data")
 print("********** Collecting Device Configs... **********")
 for device in my_devices:
 	threads = []
-	create_threads(collect_device_configs, threads,
-		device.get("deviceName"),
-		device.get("Management IP").split('/')[0],
-		22,
-		"show run\n",
-		user="admin",
-		password="mysecret",
-		device_type=connect_mapping_table[device.get("NOS")],
-	)
+	try:
+		create_threads(collect_device_configs, threads,
+			device.get("deviceName"),
+			device.get("Management IP").split('/')[0],
+			22,
+			"show run\n",
+			user="admin",
+			password="mysecret",
+			device_type=connect_mapping_table[device.get("NOS")],
+		)
 
+	except:
+		pass

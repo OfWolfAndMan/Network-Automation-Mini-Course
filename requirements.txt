@@ -13,3 +13,4 @@ yamllint
 pytest
 pytest-cov
 ciscoconfparse
+zmq
