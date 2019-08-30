@@ -13,7 +13,7 @@ def create_threads(func, threads, *args, **keywords):
 		th.join()
 
 
-def collect_device_configs(hostname, mgmt_ip, port, command, user=None, password=None, device_type=None):
+def collect_device_configs(hostname, mgmt_ip, port, command, user=None, password=None, device_type=None, device=None):
 	output = device_connect(
 		mgmt_ip,
 		port,
@@ -21,6 +21,7 @@ def collect_device_configs(hostname, mgmt_ip, port, command, user=None, password
 		user=user,
 		password=password,
 		device_type=device_type,
+		device=device,
 	)
 	with open(f"./compliance/currentConfigs/{hostname}.txt", "w") as file:
 		file.write(output)

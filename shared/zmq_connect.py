@@ -10,12 +10,8 @@ def zmq_worker():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind("tcp://127.0.0.1:5559")
-
-    devices = socket.recv()
-    devices = (json.loads(devices))
-    print(devices)
-    #return devices
-
+    devices = json.loads(socket.recv())
+    return devices
 #   Connects REQ socket to tcp://localhost:5559
 #   Sends "Devices" to server, expects a device inventory
 #   of non-excluded devices to proceed with

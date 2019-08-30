@@ -11,6 +11,8 @@ from shared.resources import yaml_function
 
 app = Flask(__name__)
 
+verifiedDevices = []
+
 @app.route("/api/v1/devices/")
 def get_devices():
     """Gets metadata for a specific device"""
@@ -25,6 +27,18 @@ def get_device(device: str):
         if a_device.get("deviceName") == device:
             return jsonify({"data": a_device}), 200
     return jsonify({"error": f"Device {device} not found!"}), 404
+
+@app.route("/api/v1/devices/verified/", methods=["GET", "POST"])
+def get_verified_devices():
+    """Gets all devices that are reachable"""
+    # Example
+    if request.method == "GET":
+        return jsonify({"data": verifiedDevices}), 200
+
+    elif request.method == "POST":
+        new_data = request.json
+        verifiedDevices.append(new_data)
+        return jsonify({"data": verifiedDevices}), 201
 
 
 @app.route("/api/v1/config/compliance/", methods=["GET", "POST"])

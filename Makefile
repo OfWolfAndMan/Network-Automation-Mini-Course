@@ -42,3 +42,4 @@ run:
 
 destroy-lab:
 	python3 ./destroy-lab.py "My New Lab"
+	rm compliance/currentConfigs/*

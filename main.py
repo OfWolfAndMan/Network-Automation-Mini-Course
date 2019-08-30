@@ -1,7 +1,7 @@
 from shared.resources import connect_to_api, parse_policy
 from datetime import datetime
 
-my_devices = connect_to_api("GET", "http://127.0.0.1:5005/api/v1/devices/")
+my_devices = connect_to_api("GET", "http://127.0.0.1:5005/api/v1/devices/verified/")
 my_devices = my_devices.json().get("data")
 
 my_policies = connect_to_api("GET", "http://127.0.0.1:5005/api/v1/config/compliance/")
