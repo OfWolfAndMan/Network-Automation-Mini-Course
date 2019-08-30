@@ -29,7 +29,6 @@ prep-cleanup:
 
 stop-api: server.PID
 	kill `cat $<` && rm $<
-	rm server.PID
 
 deploy:
 	python3 ./APIs/app.py & echo $$! > server.PID
