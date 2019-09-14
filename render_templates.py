@@ -3,7 +3,9 @@ import os
 from configTemplates.objects import L2Interface
 
 
-def render_template(Hostname, Template, Model=None, NOS="IOS", vendor="Cisco", **kwargs):
+def render_template(
+    Hostname, Template, Model=None, NOS="IOS", vendor="Cisco", **kwargs
+):
     ENV = Environment(loader=FileSystemLoader(f"./configTemplates/{NOS}"))
     params = {"hostname": Hostname, "vendor": vendor, "model": Model}
     try:
@@ -30,5 +32,3 @@ def render_template(Hostname, Template, Model=None, NOS="IOS", vendor="Cisco", *
         params["mgmt_ip"] = kwargs["mgmt_ip"]
         with open(f"{Directory}/{Hostname}.txt", "w") as renderedTemplate:
             renderedTemplate.write(template.render(**params))
-
-

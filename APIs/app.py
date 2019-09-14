@@ -13,11 +13,13 @@ app = Flask(__name__)
 
 verifiedDevices = []
 
+
 @app.route("/api/v1/devices/")
 def get_devices():
     """Gets metadata for a specific device"""
     devices = yaml_function("./APIs/lab_devices.yml", "load")
     return jsonify({"data": devices}), 200
+
 
 @app.route("/api/v1/devices/<string:device>/")
 def get_device(device: str):
@@ -27,6 +29,7 @@ def get_device(device: str):
         if a_device.get("deviceName") == device:
             return jsonify({"data": a_device}), 200
     return jsonify({"error": f"Device {device} not found!"}), 404
+
 
 @app.route("/api/v1/devices/verified/", methods=["GET", "POST"])
 def get_verified_devices():
@@ -40,6 +43,16 @@ def get_verified_devices():
         verifiedDevices.append(new_data)
         return jsonify({"data": verifiedDevices}), 201
 
+@app.route("/api/v1/devices/verified/<string:device>/", methods=["DELETE"])
+def delete_verified_device(device: str):
+    """Deletes a device that is reachable"""
+    newVerifiedDevices = verifiedDevices
+    for my_device in newVerifiedDevices:
+        if my_device.get("deviceName") == device:
+            verifiedDevices.remove(my_device)
+            return jsonify({}), 204
+    return jsonify({"error": f"Device {device} not in verified devices!"}), 404
+
 
 @app.route("/api/v1/config/compliance/", methods=["GET", "POST"])
 def get_config_policies():
@@ -50,7 +63,8 @@ def get_config_policies():
         "description": "Disables telnet on Cisco devices per security requirement 1234",
         "platform": "IOS",
         "device_types": ["router", "switch"],
-        "config": "no transport input telnet"
+        "config": "no transport input telnet",
+        "parent": "line vty 0 4"
     }
     platforms = ["IOS", "IOS-XR", "NX-OS", "EOS"]
     device_types = ["router", "switch", "firewall", "load-balancer"]
@@ -59,8 +73,8 @@ def get_config_policies():
         return jsonify({"data": config_policies}), 200
 
     elif request.method == "POST":
-        if len(request.json) != 5:
-            return jsonify({"A required field is missing! Valid fields": schema}), 400
+        if len(request.json) != 6:
+            return jsonify({"The number of parameters you specified is invalid! Valid fields example": schema}), 400
         for field in list(request.json):
             if field not in schema.keys():
                 return (
@@ -107,6 +121,7 @@ def delete_config_policy(id: str):
     for policy in config_policies:
         if policy.get("id") == id:
             config_policies.remove(policy)
+            yaml_function("./APIs/config_policies.yml", "dump", data=config_policies)
             return jsonify({}), 200
     return jsonify({"error": f"Config policy ID {id} not found!"}), 404
 

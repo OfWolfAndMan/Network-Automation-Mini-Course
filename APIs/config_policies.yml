@@ -26,16 +26,16 @@
   name: VTP Version 3
   parent: None
   platform: IOS
-- config: no ip domain lookup
-  description: Disables IP domain lookup on a network device
-  device_types: [router, switch]
-  id: 7d1f5bf3dd2c1946514214b407b6ec54
-  name: Disable Domain lookup
-  parent: None
-  platform: IOS
 - config: no lldp run
   description: Disables LLDP for a switch
   device_types: [switch]
   id: 7b5faad46c21ea88d5b680c6660e106c
   name: Disable LLDP Globally
   platform: EOS
+- config: no ip domain lookup
+  description: Disables IP domain lookup on a network device
+  device_types: [router, switch]
+  id: 0ff9b8fc48978d4035d9cd3e175a53f3
+  name: Disable Domain lookup
+  parent: None
+  platform: IOS

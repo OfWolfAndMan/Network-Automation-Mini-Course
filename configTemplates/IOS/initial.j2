@@ -1,0 +1,17 @@
+hostname {{ hostname }}
+aaa new-model
+enable secret mysecret
+service-password encryption
+username admin privilege 15 secret mysecret
+int Ethernet0/0
+ ip address {{ mgmt_ip }}
+ no shutdown
+ip domain-name thebigbadwolf.likes-pie.com
+crypto key generate rsa modulus 2048 general-keys
+ip ssh version 2
+ip ssh source-interface Ethernet0/0
+line con 0
+ privilege level 15
+line vty 0 4
+ transport input ssh
+ privilege level 15
