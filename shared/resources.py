@@ -49,7 +49,7 @@ def yaml_function(file, operation, data=None):
             yaml.dump(data, yaml_file)
     elif operation == "load":
         with open(file, "r") as yaml_file:
-            new_data = yaml.load(yaml_file, Loader=yaml.BaseLoader)
+            new_data = yaml.load(yaml_file, Loader=yaml.FullLoader)
             return new_data
     else:
         raise Exception(f"{operation} is not a valid YAML operation!")

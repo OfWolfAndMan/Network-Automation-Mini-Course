@@ -1,0 +1,43 @@
+---
+
+name:
+  type: string
+description:
+  type: string
+platform:
+  type: string
+  allowed:
+    - IOS
+    - IOS-XE
+    - NX-OS
+    - EOS
+    - JunOS
+    - FortiOS
+    - Linux
+    - Cumulus VX
+    - VyOS
+    - PAN-OS
+    - RouterOS
+  maxlength: 10
+  required: True
+device_types:
+  type: list
+  minlength: 1
+  allowed:
+    - router
+    - switch
+    - firewall
+    - vpn
+    - load balancer
+  schema:
+    type: string
+  forbidden:
+    - proxy
+  required: True
+config:
+  type: string
+  required: True
+parent:
+  type: string
+  nullable: True
+  default: None

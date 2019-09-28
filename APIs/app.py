@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from secrets import token_hex
+import json
 
 if __name__ == "__main__" and __package__ is None:
     from sys import path
@@ -8,6 +9,7 @@ if __name__ == "__main__" and __package__ is None:
     path.append(dir(path[0]))
     __package__ = "APIs"
 from shared.resources import yaml_function
+from APIs.validators import validate_schema
 
 app = Flask(__name__)
 
@@ -66,41 +68,17 @@ def get_config_policies():
         "config": "no transport input telnet",
         "parent": "line vty 0 4"
     }
-    platforms = ["IOS", "IOS-XR", "NX-OS", "EOS"]
-    device_types = ["router", "switch", "firewall", "load-balancer"]
     if request.method == "GET":
         config_policies = yaml_function("./APIs/config_policies.yml", "load")
         return jsonify({"data": config_policies}), 200
 
     elif request.method == "POST":
+        invalid_schema = validate_schema(request.json, "config_policy")
+        if invalid_schema:
+            return jsonify(json.loads(valid_schema)), 400
         if len(request.json) != 6:
             return jsonify({"The number of parameters you specified is invalid! Valid fields example": schema}), 400
-        for field in list(request.json):
-            if field not in schema.keys():
-                return (
-                    jsonify(
-                        {"An invalid field was found! Valid fields example": schema}
-                    ),
-                    400,
-                )
-        if request.json["platform"].upper() not in platforms:
-            return (
-                jsonify(
-                    {"An invalid platform was detected! Valid platforms": platforms}
-                ),
-                400,
-            )
-        for device_type in request.json["device_types"]:
-            if device_type.lower() not in device_types:
-                return (
-                    jsonify(
-                        {
-                            "An invalid device type was detected! Valid device types": device_types
-                        }
-                    ),
-                    400,
-                )
-        data = yaml_function("./APIs/config_policies.yml", "load")
+        data = yaml_function("./config_policies.yml", "load")
         for entry in data:
             if (
                 entry["name"].lower() == request.json["name"].lower()
@@ -110,7 +88,7 @@ def get_config_policies():
         new_data = request.json
         new_data["id"] = token_hex(16)
         data.append(new_data)
-        yaml_function("./APIs/config_policies.yml", "dump", data=data)
+        yaml_function("./config_policies.yml", "dump", data=data)
         return jsonify({"data": request.json}), 201
 
 
