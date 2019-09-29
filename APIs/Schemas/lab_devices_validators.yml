@@ -6,7 +6,13 @@ Management IP:
 Model:
   type: string
   required: True
+NOS:
+  type: string
+  required: True
 Region:
+  type: string
+  required: True
+Role:
   type: string
   required: True
 TACACS Server:
@@ -16,7 +22,7 @@ Site:
   required: True
 Vendor:
   type: string
-  choices:
+  allowed:
     - Cisco
     - Juniper
     - Brocade

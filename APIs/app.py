@@ -19,18 +19,33 @@ verifiedDevices = []
 @app.route("/api/v1/devices/")
 def get_devices():
     """Gets metadata for a specific device"""
-    devices = yaml_function("./APIs/lab_devices.yml", "load")
+    devices = yaml_function("./lab_devices.yml", "load")
     return jsonify({"data": devices}), 200
 
 
-@app.route("/api/v1/devices/<string:device>/")
+@app.route("/api/v1/devices/<string:device>/", methods=["GET", "POST"])
 def get_device(device: str):
     """Gets metadata for a specific device"""
-    devices = yaml_function("./APIs/lab_devices.yml", "load")
-    for a_device in devices:
-        if a_device.get("deviceName") == device:
-            return jsonify({"data": a_device}), 200
-    return jsonify({"error": f"Device {device} not found!"}), 404
+    if request.method == "GET":
+        devices = yaml_function("./APIs/lab_devices.yml", "load")
+        for a_device in devices:
+            if a_device.get("deviceName") == device:
+                return jsonify({"data": a_device}), 200
+        return jsonify({"error": f"Device {device} not found!"}), 404
+    elif request.method == "POST":
+        invalid_schema = validate_schema(request.json, "lab_devices")
+        if invalid_schema:
+            return jsonify(json.loads(invalid_schema)), 400
+        if len(request.json) != 9:
+            return jsonify({"The number of parameters you specified is invalid!"}), 400
+        data = yaml_function("./lab_devices.yml", "load")
+        for entry in data:
+            if entry["deviceName"].lower() == request.json["deviceName"].lower():
+                return jsonify({"error": "Device already exists!"}), 200
+        new_data = request.json
+        data.append(new_data)
+        yaml_function("./lab_devices.yml", "dump", data=data)
+        return jsonify({"data": request.json}), 201
 
 
 @app.route("/api/v1/devices/verified/", methods=["GET", "POST"])
@@ -44,6 +59,7 @@ def get_verified_devices():
         new_data = request.json
         verifiedDevices.append(new_data)
         return jsonify({"data": verifiedDevices}), 201
+
 
 @app.route("/api/v1/devices/verified/<string:device>/", methods=["DELETE"])
 def delete_verified_device(device: str):
@@ -59,14 +75,13 @@ def delete_verified_device(device: str):
 @app.route("/api/v1/config/compliance/", methods=["GET", "POST"])
 def get_config_policies():
     """Gets all config policies and creates new config policies"""
-    # Example
     schema = {
         "name": "Telnet Disable Cisco",
         "description": "Disables telnet on Cisco devices per security requirement 1234",
         "platform": "IOS",
         "device_types": ["router", "switch"],
         "config": "no transport input telnet",
-        "parent": "line vty 0 4"
+        "parent": "line vty 0 4",
     }
     if request.method == "GET":
         config_policies = yaml_function("./APIs/config_policies.yml", "load")
@@ -77,7 +92,14 @@ def get_config_policies():
         if invalid_schema:
             return jsonify(json.loads(invalid_schema)), 400
         if len(request.json) != 6:
-            return jsonify({"The number of parameters you specified is invalid! Valid fields example": schema}), 400
+            return (
+                jsonify(
+                    {
+                        "The number of parameters you specified is invalid! Valid fields example": schema
+                    }
+                ),
+                400,
+            )
         data = yaml_function("./config_policies.yml", "load")
         for entry in data:
             if (

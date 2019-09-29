@@ -1,6 +1,7 @@
 import zmq
 import json
 
+
 #   Request-reply service in Python
 #   Connects REP socket to tcp://localhost:5560
 #   Expects "Devices" from client, replies with valid devices

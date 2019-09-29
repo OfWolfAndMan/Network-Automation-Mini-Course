@@ -1,5 +1,3 @@
----
-
 - Management IP: 192.168.170.130/24
   Model: '3925'
   NOS: IOS
@@ -37,7 +35,7 @@
   Vendor: Cisco
   deviceName: R4
 - Management IP: 192.168.170.134/24
-  Model: 'ASR-1002-X'
+  Model: ASR-1002-X
   NOS: IOS
   Region: Asia-East
   Role: Branch Hub Router
@@ -46,7 +44,7 @@
   Vendor: Cisco
   deviceName: R5
 - Management IP: 192.168.170.135/24
-  Model: 'ASR-1002-X'
+  Model: ASR-1002-X
   NOS: IOS
   Region: Asia-East
   Role: Branch Hub Router
@@ -55,7 +53,7 @@
   Vendor: Cisco
   deviceName: R6
 - Management IP: 192.168.170.136/24
-  Model: '4451-X'
+  Model: 4451-X
   NOS: IOS
   Region: Europe-West
   Role: Medium Branch Router
@@ -64,7 +62,7 @@
   Vendor: Cisco
   deviceName: R7
 - Management IP: 192.168.170.137/24
-  Model: '4451-X'
+  Model: 4451-X
   NOS: IOS
   Region: Europe-West
   Role: Medium Branch Router

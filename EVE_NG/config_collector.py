@@ -35,5 +35,3 @@ def collect_device_configs(
     )
     with open(f"./compliance/currentConfigs/{hostname}.txt", "w") as file:
         file.write(output)
-
-
