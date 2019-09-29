@@ -1,0 +1,32 @@
+---
+
+Management IP:
+  type: string
+  required: True
+Model:
+  type: string
+  required: True
+Region:
+  type: string
+  required: True
+TACACS Server:
+  type: ipv4_address
+Site:
+  type: string
+  required: True
+Vendor:
+  type: string
+  choices:
+    - Cisco
+    - Juniper
+    - Brocade
+    - Arista
+    - Fortinet
+    - Palo Alto
+    - F5
+    - Extreme
+  required: True
+deviceName:
+  type: string
+  required: True
+

@@ -75,7 +75,7 @@ def get_config_policies():
     elif request.method == "POST":
         invalid_schema = validate_schema(request.json, "config_policy")
         if invalid_schema:
-            return jsonify(json.loads(valid_schema)), 400
+            return jsonify(json.loads(invalid_schema)), 400
         if len(request.json) != 6:
             return jsonify({"The number of parameters you specified is invalid! Valid fields example": schema}), 400
         data = yaml_function("./config_policies.yml", "load")
