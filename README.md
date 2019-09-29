@@ -21,9 +21,9 @@ configured in the config policy API.
 <code>make cleanup</code>
 
 ## API Endpoints
-|      Endpoint                 |  Method  |       Purpose             |
-|-------------------------------|----------|---------------------------|
-|/api/v1/devices/               | GET      | Retrieves all devices     |
-|/api/v1/devices/{device}/      | GET      | Retrieves a device        |
-|/api/v1/config/compliance/     | GET/POST | Retrieves/adds a policy   |
-|/api/v1/config/compliance/{id}/| GET      | Retrieves a policy by id  |
+|      Endpoint                 |  Method    |       Purpose             |
+|-------------------------------|------------|---------------------------|
+|/api/v1/devices/               | GET/POST   | Retrieves all devices     |
+|/api/v1/devices/{device}/      | GET        | Retrieves a device        |
+|/api/v1/config/compliance/     | GET/POST   | Retrieves/adds a policy   |
+|/api/v1/config/compliance/{id}/| GET/DELETE | Retrieves a policy by id  |
