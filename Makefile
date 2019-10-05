@@ -1,5 +1,4 @@
-
-.PHONY: lint all-test all-notest init test format prep-cleanup cleanup deploy stop-api destroy-lab run
+.PHONY: lint all-test all-notest init test format prep-cleanup cleanup deploy stop-api destroy-lab run html
 
 prep-test: init test format lint prep-cleanup
 prep-notest: init format lint prep-cleanup
@@ -21,7 +20,7 @@ lint:
 	$(info ************  Linting Python files ************)
 	flake8 . > ./Logs/flake8lint-log.txt
 	$(info ************  Linting YAML files ************)
-	yamllint . > ./Logs/yamllint
+	yamllint .
 
 prep-cleanup:
 	rm -r tests/__pycache__

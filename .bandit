@@ -1,0 +1,3 @@
+[bandit]
+exclude: ./venv,/tests,/compliance,/configTemplates,/Logs,/renderedTemplates
+tests: B101,B102,B103,B105,B107,B301,B502,B506,B507

@@ -1,5 +1,6 @@
 from shared.resources import connect_to_api, parse_policy
 from datetime import datetime
+import flask
 
 my_devices = connect_to_api("GET", "http://127.0.0.1:5005/api/v1/devices/verified/")
 my_devices = my_devices.json().get("data")
@@ -32,7 +33,8 @@ with open(
                 )
                 if not result:
                     file.write(
-                        f"- Violation {viol_id} - {policy.get('name')} is not applied\n"
+                        f"- Violation {viol_id}"
+                        f" - {policy.get('name')} is not applied\n"
                     )
                     viol_id += 1
         connect_to_api(

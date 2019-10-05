@@ -1,3 +1,5 @@
+---
+
 - config: transport input ssh
   description: Enables only SSH on the VTY line
   device_types: [router, switch]

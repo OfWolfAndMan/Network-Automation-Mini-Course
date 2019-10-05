@@ -9,6 +9,13 @@ Model:
 NOS:
   type: string
   required: True
+  allowed:
+    - IOS
+    - EOS
+    - IOS-XE
+    - IOS-XR
+    - NX-OS
+    - JunOS
 Region:
   type: string
   required: True
@@ -35,4 +42,3 @@ Vendor:
 deviceName:
   type: string
   required: True
-

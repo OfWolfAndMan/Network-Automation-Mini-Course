@@ -57,6 +57,18 @@ class CustomValidator(Validator):
 
 
 def validate_device_types(field, value, error):
+    """
+    Validates that the device type is within the schema of the Cerberus definition
+
+    :param field: The device_types field
+    :type field: str
+    :param value: The set of device types
+    :type value: list
+    :param error: The error given if the data validation fails
+    :type error: dict
+    :returns: dict -- Only if the device type/types were not valid
+
+    """
     schema_file = yaml_function("./Schemas/config_policy_validators.yml", "load")
     for device_type in value:
         if device_type not in schema_file[field]["allowed"]:
@@ -65,6 +77,16 @@ def validate_device_types(field, value, error):
 
 def validate_platform(field, value, error):
     schema_file = yaml_function("./Schemas/config_policy_validators.yml", "load")
+    if value not in schema_file[field]["allowed"]:
+        error(field, f"Valid values: {[x for x in schema_file[field]['allowed']]}")
+
+def validate_NOS(field, value, error):
+    schema_file = yaml_function("./Schemas/lab_devices_validators.yml", "load")
+    if value not in schema_file[field]["allowed"]:
+        error(field, f"Valid values: {[x for x in schema_file[field]['allowed']]}")
+
+def validate_vendor(field, value, error):
+    schema_file = yaml_function("./Schemas/lab_devices_validators.yml", "load")
     if value not in schema_file[field]["allowed"]:
         error(field, f"Valid values: {[x for x in schema_file[field]['allowed']]}")
 
@@ -79,7 +101,11 @@ mapping_table = [
             },
         }
     },
-    {"lab_devices": {"file": "lab_devices_validators.yml", "customValidators": {}}},
+    {"lab_devices": {"file": "lab_devices_validators.yml",
+                     "customValidators": {
+                         "NOS": validate_NOS,
+                         "Vendor": validate_vendor
+                     }}},
 ]
 
 
