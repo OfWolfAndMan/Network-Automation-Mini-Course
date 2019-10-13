@@ -2,10 +2,18 @@
 A network automation service that checks compliance of network device based on compliance policies
 configured in the config policy API.
 - Multi-vendor support
-- Device Inventory API
-- Config Policy API
+- Device Inventory API (With input validation)
+- Config Policy API (With input validation)
 - Template Renderer
 - Log files output to easily determine what configs are not deployed to specific devices
+
+## Components
+- Flask (Web Framework)
+- Cerberus (Data validation)
+- Jinja2 (Template renderer)
+- Netmiko (Device connections)
+- Requests (API calls)
+- CiscoConfParse (Parsing for compliance inspection)
 
 ## Workflow
 ![Alt Text](Workflow.png?raw=True)
