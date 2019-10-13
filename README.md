@@ -1,4 +1,4 @@
-# Config Compliance Automation Service v1.0.0
+# Config Compliance Automation Service v1.1.0
 A network automation service that checks compliance of network device based on compliance policies
 configured in the config policy API.
 - Multi-vendor support
