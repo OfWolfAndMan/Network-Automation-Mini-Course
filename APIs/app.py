@@ -20,7 +20,7 @@ verifiedDevices = []
 def get_devices():
     """Gets metadata for a specific device"""
     if request.method == "GET":
-        devices = yaml_function("./lab_devices.yml", "load")
+        devices = yaml_function("./APIs/lab_devices.yml", "load")
         return jsonify({"data": devices}), 200
 
     elif request.method == "POST":
@@ -29,7 +29,7 @@ def get_devices():
             return jsonify(json.loads(invalid_schema)), 400
         if len(request.json) != 9:
             return jsonify({"error": "The number of parameters you specified is invalid!"}), 400
-        data = yaml_function("./lab_devices.yml", "load")
+        data = yaml_function("./APIs/lab_devices.yml", "load")
         for entry in data:
             if entry["deviceName"].lower() == request.json["deviceName"].lower():
                 return jsonify({"error": "Device already exists!"}), 200
