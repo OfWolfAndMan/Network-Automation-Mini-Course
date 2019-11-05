@@ -18,3 +18,4 @@ cerberus
 sphinx
 nornir
 jupyterlab
+ntc_templates
