@@ -11,7 +11,7 @@ from ciscoconfparse import CiscoConfParse
 s = sched.scheduler(time.time, time.sleep)
 
 
-def get_response_code(r):
+def get_response_code(r) -> None:
     if "40" in str(r.status_code):
         raise Exception(
             f"A request error occurred! error was {r.status_code}: {r.json().get('message')}"
@@ -31,7 +31,7 @@ def get_response_code(r):
 
 
 def connect_to_api(
-    method, uri, headers=None, auth=None, data=None, json=None, cookies=None
+    method: str, uri: str, headers=None, auth=None, data=None, json=None, cookies=None
 ):
     methods = ["GET", "PUT", "PATCH", "DELETE", "POST"]
     if method not in methods:
