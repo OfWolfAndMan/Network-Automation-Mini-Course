@@ -10,7 +10,7 @@ def csv_writer(output_file: str, fieldnames: list, BASE_PATH: str, command: str,
 
 	:param output_file: The file which will store the select information from the parsed output
 	:param fieldnames: The fields to be stored in the csv file
-	:param BASE_PATH:
+	:param BASE_PATH: The base path to the parsed outputs
 	:param command: The expected network command to be parsed
 	:param platform: The platform of our network device (i.e. cisco_ios, cisco_nxos)
 	:return: None

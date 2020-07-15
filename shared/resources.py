@@ -43,7 +43,7 @@ def connect_to_api(
     return r
 
 
-def yaml_function(file, operation, data=None):
+def yaml_function(file, operation: str, data=None):
     if operation == "dump":
         with open(file, "w") as yaml_file:
             yaml.dump(data, yaml_file)
