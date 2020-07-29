@@ -7,6 +7,9 @@ import slack
 import os
 from shared.storage import NOSes
 from ciscoconfparse import CiscoConfParse
+import psycopg2
+import sys
+from getpass import getpass
 
 s = sched.scheduler(time.time, time.sleep)
 
@@ -138,3 +141,17 @@ def parse_policy(policy, configFile):
     else:
         object = parse.find_objects(policy[1])
     return object
+
+
+def get_dbentries_postgres(fields: tuple, conn_string: str, action: str, table: str):
+    conn = psycopg2.connect(conn_string)
+    cur = conn.cursor()
+    if action.upper() == "SELECT":
+        cur.execute(f"SELECT * FROM {table}")
+        records = cur.fetchall()
+        print([dict(zip(fields, l)) for l in records])
+
+# device_fields = ('hostname', 'management_ip', 'model', 'vendor', 'function', 'credentials', 'created_on', 'location')
+# conn_string = f"host='127.0.0.1' dbname='network_automation' user='postgres' password={getpass()}"
+# get_dbentries_postgres(device_fields, conn_string, "SELECT", "devices")
+

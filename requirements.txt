@@ -20,4 +20,4 @@ nornir
 jupyterlab
 ntc_templates
 pydeps
-
+psycopg2-binary
